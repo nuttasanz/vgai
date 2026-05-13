@@ -2,19 +2,23 @@
 part_of: VG-AI product vision (modular)
 ---
 
-**Navigation:** [Overview](PRODUCT_VISION.md) ·
-[01 Principles](01_PRODUCT_PRINCIPLES.md) ·
-[02 Workflows](02_AI_MANAGED_WORKFLOW.md) ·
-[03 Orchestration](03_AI_ORCHESTRATION_AND_MULTI_ROLE_GOVERNANCE.md) ·
-[04 Tech stack & rules](04_TECH_STACK_AND_RULE_GENERATION.md) ·
-[05 Verification](05_VERIFICATION_AND_RISK.md) ·
-[06 Build & repair](06_BUILD_REPAIR_AND_STOP_CONDITIONS.md) ·
-[07 Engineering judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md) ·
-[08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
-[09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
-[10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
+**Navigation:**
+
+- [Overview](PRODUCT_VISION.md)
+- [01 Principles](01_PRODUCT_PRINCIPLES.md)
+- [02 Workflows](02_AI_MANAGED_WORKFLOW.md)
+- [03 Orchestration](03_AI_ORCHESTRATION_AND_MULTI_ROLE_GOVERNANCE.md)
+- [04 Tech stack & rules](04_TECH_STACK_AND_RULE_GENERATION.md)
+- [05 Verification](05_VERIFICATION_AND_RISK.md)
+- [06 Build & repair](06_BUILD_REPAIR_AND_STOP_CONDITIONS.md)
+- [07 Engineering judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md)
+- [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md)
+- [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md)
+- [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md)
+- [11 Research](11_RESEARCH_POSITIONING.md)
+- [12 Chief](12_CHIEF_COMPARISON.md)
+- [13 Examples](13_EXAMPLES_AND_SCENARIOS.md)
+- [Glossary](14_GLOSSARY.md)
 
 # Examples and Scenarios
 
