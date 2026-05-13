@@ -28,22 +28,22 @@ The architecture is documented as **eleven major product layers** (the **major p
 
 ## Read next
 
-| Document | Contents |
-|----------|----------|
-| [01 Product Principles](01_PRODUCT_PRINCIPLES.md) | Scope note, research concept, **eleven major product layers**, problem/users, what the product is/is not, safe claims |
-| [02 AI-Managed Workflow](02_AI_MANAGED_WORKFLOW.md) | **Existing project / task workflow** vs **new project initialization**, overall workflow diagram |
-| [03 Orchestration & Governance](03_AI_ORCHESTRATION_AND_MULTI_ROLE_GOVERNANCE.md) | AI-managed operating model, risk-based multi-role governance, AI roles |
-| [04 Tech Stack & Rules](04_TECH_STACK_AND_RULE_GENERATION.md) | AI-generated rule lifecycle, rule metadata |
-| [05 Verification & Risk](05_VERIFICATION_AND_RISK.md) | Guided gates, risk-based approval, human review handoff structure, verification dimensions, RAG role |
-| [06 Build, Repair, Stop](06_BUILD_REPAIR_AND_STOP_CONDITIONS.md) | Build-and-repair, stop conditions, cost/token layer, versioning/diff/rollback, failure mode report |
-| [07 Engineering Judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md) | Critical thinking, problem framing, questioning, judgment dimensions (requirements through human review), AI skepticism, decision documentation |
-| [08 Learning & Skills](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) | Engineering reflection **report and questions**, project decision log template, rubric, skill progression, repeated reflection, mentor mode, post-task learning, learning sequence diagram |
-| [09 Adapters & Framework Files](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) | Solo-first path, `.vgai` layout, agent compatibility, trust kernel and project rules |
-| [10 Productization & Platform](10_PRODUCTIZATION_AND_PLATFORM.md) | Git/PR, CLI, web dashboard, integrations, audit, secrets, reviewer, dashboard, team mode, roadmap |
-| [11 Research](11_RESEARCH_POSITIONING.md) | Contributions, research questions, evaluation metrics |
-| [12 Chief Comparison](12_CHIEF_COMPARISON.md) | Relationship to Chief, **Chief compatibility mode** sequence diagram |
-| [13 Examples & Scenarios](13_EXAMPLES_AND_SCENARIOS.md) | Chief-style and AI-managed clinic booking walkthroughs, expected outputs, extended use case |
-| [14 Glossary](14_GLOSSARY.md) | Definitions and cross-links |
+| Document                                                                          | Contents                                                                                                                                                                                   |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [01 Product Principles](01_PRODUCT_PRINCIPLES.md)                                 | Scope note, research concept, **eleven major product layers**, problem/users, what the product is/is not, safe claims                                                                      |
+| [02 AI-Managed Workflow](02_AI_MANAGED_WORKFLOW.md)                               | **Existing project / task workflow** vs **new project initialization**, overall workflow diagram                                                                                           |
+| [03 Orchestration & Governance](03_AI_ORCHESTRATION_AND_MULTI_ROLE_GOVERNANCE.md) | AI-managed operating model, risk-based multi-role governance, AI roles                                                                                                                     |
+| [04 Tech Stack & Rules](04_TECH_STACK_AND_RULE_GENERATION.md)                     | AI-generated rule lifecycle, rule metadata                                                                                                                                                 |
+| [05 Verification & Risk](05_VERIFICATION_AND_RISK.md)                             | Guided gates, risk-based approval, human review handoff structure, verification dimensions, RAG role                                                                                       |
+| [06 Build, Repair, Stop](06_BUILD_REPAIR_AND_STOP_CONDITIONS.md)                  | Build-and-repair, stop conditions, cost/token layer, versioning/diff/rollback, failure mode report                                                                                         |
+| [07 Engineering Judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md)                | Critical thinking, problem framing, questioning, judgment dimensions (requirements through human review), AI skepticism, decision documentation                                            |
+| [08 Learning & Skills](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md)           | Engineering reflection **report and questions**, project decision log template, rubric, skill progression, repeated reflection, mentor mode, post-task learning, learning sequence diagram |
+| [09 Adapters & Framework Files](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md)         | Solo-first path, `.vgai` layout, agent compatibility, trust kernel and project rules                                                                                                       |
+| [10 Productization & Platform](10_PRODUCTIZATION_AND_PLATFORM.md)                 | Git/PR, CLI, web dashboard, integrations, audit, secrets, reviewer, dashboard, team mode, roadmap                                                                                          |
+| [11 Research](11_RESEARCH_POSITIONING.md)                                         | Contributions, research questions, evaluation metrics                                                                                                                                      |
+| [12 Chief Comparison](12_CHIEF_COMPARISON.md)                                     | Relationship to Chief, **Chief compatibility mode** sequence diagram                                                                                                                       |
+| [13 Examples & Scenarios](13_EXAMPLES_AND_SCENARIOS.md)                           | Chief-style and AI-managed clinic booking walkthroughs, expected outputs, extended use case                                                                                                |
+| [14 Glossary](14_GLOSSARY.md)                                                     | Definitions and cross-links                                                                                                                                                                |
 
 ## One-line positioning
 

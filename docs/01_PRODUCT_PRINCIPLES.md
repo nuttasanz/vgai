@@ -162,21 +162,23 @@ At full scope, the system has **eleven major product layers** (the **major produ
    - decision documentation habits that connect intent, alternatives, and unresolved risks (see [07 Engineering Thinking and Judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md))
 
 10. **Learning, Reflection, and Skill Development Layer**
-   - engineering reflection reports, reflection question sets, repeated reflection and post-task learning workflows
-   - mentor mode, skill progression map, suggested learning paths, and learning-oriented prompts that reuse verification and repair evidence
-   - makes judgment practice repeatable without collapsing “thinking” into “logging output” (see [08 Learning, Reflection, and Skill Development](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md))
+
+- engineering reflection reports, reflection question sets, repeated reflection and post-task learning workflows
+- mentor mode, skill progression map, suggested learning paths, and learning-oriented prompts that reuse verification and repair evidence
+- makes judgment practice repeatable without collapsing “thinking” into “logging output” (see [08 Learning, Reflection, and Skill Development](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md))
 
 11. **Productization and Platform Layer**
-   - framework package distribution and solo-first usage flow
-   - CLI / TUI assistant and MCP / tool server mode
-   - optional web app or dashboard
-   - Git and pull request workflow
-   - integration layer
-   - audit trail and AI governance
-   - secret and sensitive data protection
-   - independent AI review/backstop reviewer
-   - quality and impact dashboard
-   - optional team or organization mode
+
+- framework package distribution and solo-first usage flow
+- CLI / TUI assistant and MCP / tool server mode
+- optional web app or dashboard
+- Git and pull request workflow
+- integration layer
+- audit trail and AI governance
+- secret and sensitive data protection
+- independent AI review/backstop reviewer
+- quality and impact dashboard
+- optional team or organization mode
 
 The product should start from a **solo-first framework workflow** because the first real user may be the researcher. The early product should help one developer initialize the framework in a project, use an existing AI coding agent, verify the result, learn from the session, and gradually improve their software engineering judgment. Team, organization, and web platform features should be treated as later expansion rather than a requirement for the first version.
 
@@ -274,15 +276,17 @@ For comparison with Chief and **Chief compatibility mode**, see [12 Chief Compar
 
 This research and product vision do not claim that the framework guarantees correct, secure, or production-ready software.
 
-The safe claim is:
+The primary safe claim is:
 
-> This research proposes a framework-first, verification-gated AI-assisted software development workflow that can guide existing AI coding agents such as Claude Code or Codex. The framework helps less-experienced developers use AI more systematically, identify gaps and risks in AI-generated outputs, reduce blind trust, control unnecessary repair, and learn software engineering judgment through guided verification, trust/risk reporting, and engineering reflection.
+> This product vision proposes a framework-first, AI-managed, verification-governed software engineering workflow that orchestrates and governs existing AI coding agents. It helps less-experienced developers reduce blind trust in AI-assisted development through multi-role critique, AI-generated rule review, deterministic evidence, verification gates, controlled repair, stop conditions, confidence labels, audit trails, rollback support, engineering judgment scaffolding, and human review escalation.
 
 The framework does not replace senior engineers, software architects, or security engineers. Instead, it helps users recognize when AI output is acceptable for prototype use, when additional verification is needed, and when human review should be requested.
 
-## Additional Safe Claim for AI-Managed Autonomy
+AI may manage the workflow end-to-end — including tech-stack recommendation (for new projects), rule generation, agent instruction creation, implementation planning, verification, repair, reporting, reflection, and rule updates. However, AI outputs are not trusted by default. The system increases trustworthiness by governing AI decisions through:
 
-The system may claim that it is **AI-managed and verification-governed**, meaning AI can manage project setup, technology-stack selection, rule generation, agent instruction creation, implementation planning, verification, repair, reporting, reflection, and rule updates. However, the system should not claim that AI decisions are inherently correct. The safer claim is:
-
-> The system increases the trustworthiness of AI-managed software engineering work by governing AI decisions through role-separated critique, rule review, deterministic evidence, verification gates, repair limits, stop conditions, confidence labels, audit trails, rollback support, and human review escalation for high-risk or uncertain decisions.
-
+- role-separated critique and rule review
+- deterministic evidence from build, lint, typecheck, and test execution
+- verification gates and confidence labels
+- repair limits and stop conditions
+- audit trails and rollback support
+- human review escalation for high-risk or uncertain decisions

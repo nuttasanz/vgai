@@ -20,7 +20,7 @@ part_of: VG-AI product vision (modular)
 
 # Engineering Thinking and Judgment
 
-Under the **AI-managed, verification-governed** model, AI may propose plans, rules, code, and narratives—but **trust is earned through evidence, role-separated critique, gates, budgets, stop rules, and human escalation.** The Engineering Thinking and Judgment layer is the **human-facing competence layer**: it describes what “good supervision of AI-assisted work” looks like *inside the user’s head*, independent of any single UI.
+Under the **AI-managed, verification-governed** model, AI may propose plans, rules, code, and narratives—but **trust is earned through evidence, role-separated critique, gates, budgets, stop rules, and human escalation.** The Engineering Thinking and Judgment layer is the **human-facing competence layer**: it describes what “good supervision of AI-assisted work” looks like _inside the user’s head_, independent of any single UI.
 
 This document is intentionally about **mental models and habits**, not about the mechanics of logging skills or generating mentor prompts. Those mechanics live in [08 Learning, Reflection, and Skill Development](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md), which produces artifacts (reflection report, question sets, rubrics, decision logs) meant to **practice** the judgment described here.
 
@@ -34,7 +34,7 @@ Critical thinking here means treating AI outputs as **claims subject to challeng
 - Ask what would falsify the AI’s conclusion: what evidence could contradict it, and was that evidence actually collected?
 - Prefer **calibrated skepticism**: distrust generic confidence; trust repeatable checks, independent review roles, and explicit assumption logging.
 
-This aligns directly with verification governance: what the model *says* must converge with what tools and gates *show*.
+This aligns directly with verification governance: what the model _says_ must converge with what tools and gates _show_.
 
 ---
 
@@ -55,9 +55,9 @@ Examples of question patterns:
 - What requirements are still implicit or ambiguous?
 - What assumptions are we leaning on, and which ones are unsafe defaults?
 - What trade-offs did we choose, and what did we give up?
-- What evidence would convince a reviewer this is correct *for this risk level*?
+- What evidence would convince a reviewer this is correct _for this risk level_?
 
-These questions are exercised repeatedly through the reflection workflows in [08](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md#engineering-reflection-questions) but the *capability* is judgment, not the template.
+These questions are exercised repeatedly through the reflection workflows in [08](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md#engineering-reflection-questions) but the _capability_ is judgment, not the template.
 
 ---
 
@@ -96,8 +96,8 @@ Risk thinking includes:
 
 Verification thinking ties claims to **repeatable checks** when possible: build, lint, typecheck, tests, and structured reviews.
 
-- It asks: **What evidence exists**, what evidence is missing, and what evidence would be too expensive *not* to collect?
-- It complements guided verification gates: the user should understand *why* a gate exists, not only how to click through it.
+- It asks: **What evidence exists**, what evidence is missing, and what evidence would be too expensive _not_ to collect?
+- It complements guided verification gates: the user should understand _why_ a gate exists, not only how to click through it.
 
 ## Security thinking
 

@@ -24,7 +24,7 @@ This file retains the opening framing from the original monolithic vision’s co
 
 ## Agent-facing framework surfaces (repository layout, compatibility, rules)
 
-The following describes how the framework becomes **adoptable and governable inside a repo** without implying that adapters *are* the full platform: adapters are how governed execution reaches **existing** agents.
+The following describes how the framework becomes **adoptable and governable inside a repo** without implying that adapters _are_ the full platform: adapters are how governed execution reaches **existing** agents.
 
 The most important product shift is:
 

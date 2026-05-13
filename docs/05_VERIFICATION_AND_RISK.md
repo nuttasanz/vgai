@@ -56,8 +56,8 @@ Do you want to accept this prototype default, choose PostgreSQL, ask for explana
 
 This design allows the framework to support users who do not yet have senior-level judgment while still keeping assumptions, risks, and human review needs visible.
 
-
 Verification Gate 1 checks:
+
 - requirement completeness
 - missing information
 - architecture suitability
@@ -66,6 +66,7 @@ Verification Gate 1 checks:
 - sensitive data concerns
 
 Verification Gate 2 checks:
+
 - code quality
 - maintainability
 - authorization logic
@@ -80,6 +81,7 @@ Verification Gate 2 checks:
 - whether unresolved build or runtime errors should be escalated to human review
 
 Verification Gate 3 checks:
+
 - Docker/build readiness
 - environment configuration
 - CI/CD
@@ -90,6 +92,7 @@ Verification Gate 3 checks:
 - backup strategy
 - secret management
 - production deployment assumptions
+
 ## Guided Verification Gate 1 Sequence Diagram
 
 ```mermaid
@@ -113,6 +116,7 @@ sequenceDiagram
     FW-->>Agent: Gate decision: pass for prototype, revise, or human review needed
     Agent-->>User: Show Gate 1 decision and next step
 ```
+
 ## Acceptance Criteria Generation
 
 Before the AI writes or modifies code, the system should generate explicit acceptance criteria for the task. These criteria define what must be true for the task to be considered complete.
@@ -185,6 +189,7 @@ Purpose:
 - reduce the risk of AI modifying sensitive code without user awareness
 - teach users that different engineering changes require different levels of review
 - connect implementation decisions with risk-based software engineering judgment
+
 ## Human Review Handoff Package
 
 When the system detects high-risk decisions, unresolved issues, or production-sensitive concerns, it should generate a Human Review Handoff Package. This package helps less-experienced developers ask better questions to a senior engineer, instructor, or security reviewer.
@@ -195,24 +200,29 @@ Suggested structure:
 # Human Review Handoff
 
 ## Task
+
 Add admin-only appointment deletion.
 
 ## AI Changes
+
 - Added requireAdmin middleware
 - Modified DELETE appointment API
 - Added basic authorization check
 
 ## Verification Evidence
+
 - Build passed
 - Typecheck passed
 - Basic authorization check found
 
 ## Remaining Risks
+
 - Permission matrix incomplete
 - No audit logging for delete operation
 - Session expiration policy unclear
 
 ## Questions for Reviewer
+
 1. Is this RBAC model appropriate for the project?
 2. Should deletion require audit logging?
 3. Is the session handling secure enough?
@@ -224,6 +234,7 @@ Purpose:
 - help junior developers know what to ask during human review
 - make escalation structured instead of vague
 - preserve the safe claim that the system does not replace senior engineers
+
 ## Main Verification Dimensions
 
 The system evaluates AI-generated outputs in three dimensions:

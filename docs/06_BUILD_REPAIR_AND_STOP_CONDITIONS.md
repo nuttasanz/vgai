@@ -262,26 +262,33 @@ Suggested structure:
 # Failure Mode Report
 
 ## Status
+
 Requires Human Review
 
 ## What Failed
+
 Build still fails after 3 repair attempts.
 
 ## What Was Attempted
+
 - Added role field to User model
 - Updated authorization helper
 - Updated appointment delete route
 
 ## Current Error
+
 SessionUser type does not include role information.
 
 ## Likely Root Cause
+
 The existing session structure conflicts with the newly added RBAC logic.
 
 ## Why Automated Repair Stopped
+
 Repair budget was exceeded and further changes may affect authentication behavior.
 
 ## Recommended Next Step
+
 Ask a senior developer to review session handling and authorization design.
 ```
 
@@ -290,4 +297,3 @@ Purpose:
 - convert failure into an understandable learning artifact
 - prevent endless AI repair loops
 - clearly communicate what humans should inspect next
-

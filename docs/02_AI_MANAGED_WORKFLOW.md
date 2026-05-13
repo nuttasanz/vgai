@@ -30,6 +30,8 @@ Existing AI coding agents are **orchestrated and governed execution tools**: the
 
 The following is the **continuous loop for an existing repository or a scoped development task** (distinct from [AI-managed new project initialization](#ai-managed-new-project-initialization-workflow) below).
 
+> **Important distinction:** For existing projects, the tech stack is already known. The system detects the stack from the repository and generates task-scoped rules from that detected stack. The system does not re-select a new technology stack at each task. Tech stack review applies only when the task itself requires a stack-level change (for example, adding a new database, replacing a framework, or adding a major dependency).
+
 ### Core workflow
 
 The system workflow is designed as a continuous development-and-learning loop. One cycle starts from a user requirement or development task, produces verified implementation artifacts, generates learning artifacts, and then feeds the next task or learning path.
@@ -41,7 +43,7 @@ The system workflow is:
 3. Missing information and assumption detection
 4. Acceptance Criteria Generation: define what must be true for the task to be considered complete
 5. AI-assisted project planning
-6. Architecture and tech stack recommendation
+6. Architecture and impact analysis; tech stack review only if the task requires a stack-level change (for example, adding a major dependency, replacing a framework, or introducing a new database)
 7. Impact analysis: identify affected files, modules, APIs, schema, tests, and risk areas
 8. Verification Gate 1: Requirement, acceptance criteria, architecture, and impact review
 9. Task breakdown into milestones and implementation steps

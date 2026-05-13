@@ -129,11 +129,13 @@ If the user accepts defaults or says "I don't know," the agent writes an Assumpt
 # Assumption Log
 
 ## Authentication
+
 The system assumes email/password login for prototype.
 Reason: user did not specify authentication method.
 Risk: authentication design requires human review before production.
 
 ## Appointment cancellation
+
 The system assumes patients can cancel their own appointments and admins can cancel any appointment.
 Reason: default prototype permission model.
 Risk: cancellation policy may need stakeholder review.
@@ -239,6 +241,7 @@ Playwright as optional future E2E testing
 # Tech Stack Decision Record
 
 ## Selected Stack
+
 - Next.js
 - TypeScript
 - PostgreSQL
@@ -248,23 +251,28 @@ Playwright as optional future E2E testing
 - Vitest
 
 ## Why This Stack Was Selected
+
 The system is a role-based web application with structured relational data such as users, doctors, appointments, roles, and schedules. TypeScript and Prisma improve maintainability and verification. PostgreSQL is selected because the system may later require stronger data integrity and production-like behavior.
 
 ## Alternatives Considered
+
 - SQLite: simpler for local prototype but less suitable for production-like concurrency.
 - MongoDB: less aligned with structured relational scheduling data.
 - Laravel: viable, but not selected because this product direction favors TypeScript-based AI coding agent compatibility.
 
 ## Assumptions
+
 - Prototype-first project.
 - User wants a stack that is learnable and verifiable.
 - Patient data may be sensitive.
 
 ## Risks
+
 - PostgreSQL setup may be harder for beginners.
 - Authentication and role design require review before production.
 
 ## Confidence
+
 Medium-high for prototype and learning use.
 Medium for production use until reviewed.
 ```
@@ -389,34 +397,40 @@ Status:
 Prototype-ready, but not production-ready
 
 Covered:
+
 - basic authentication
 - frontend/backend/database separation
 - Docker setup
 - build check passed after one repair iteration
 
 Partially covered:
+
 - RBAC exists but permission matrix is incomplete
 - error handling exists but inconsistent
 
 Build-and-repair result:
+
 - initial build failed due to missing type definition
 - AI repair attempt updated the related type and route handler
 - build passed after repair
 - remaining warning: login endpoint has no rate limiting
 
 Stop-condition result:
+
 - automated repair stopped after required checks passed
 - no Critical or High implementation errors remained
 - remaining warning was classified as a security improvement requiring review, not an unlimited repair trigger
 - recommendation: do not continue automated refactoring without human approval
 
 Cost/token optimization result:
+
 - relevant files were selected instead of sending the full repository
 - build error log was compressed before repair analysis
 - cached codebase summary was reused
 - repair stopped within the defined repair and token budget
 
 Missing / High risk:
+
 - audit log for sensitive operations
 - input validation strategy
 - monitoring
@@ -424,29 +438,34 @@ Missing / High risk:
 - secret management policy
 
 Requires human review:
+
 - data privacy and retention policy
 - access control rules
 - production deployment design
 
 Learning feedback:
+
 - why RBAC is needed
 - why login alone is not enough
 - why audit logging matters
 - why Docker does not mean production-ready
 
 Engineering reflection:
+
 - the agent changed authorization-related files because privileged actions must be protected at the API layer, not only in the UI
 - the selected approach centralizes admin checks to reduce duplicated authorization logic
 - an alternative would be inline role checks in each route, but that may increase inconsistency and maintenance cost
 - the remaining risks are not reasons for unlimited AI refactoring; they should be split into separate tasks or reviewed by a human
 
 Skill progression update:
+
 - Security Awareness: practiced RBAC and API authorization
 - Testing Strategy: needs more unauthorized-case testing
 - Production Readiness: needs more logging, monitoring, backup, and deployment planning
 - Risk-Based Decision Making: practiced stop vs continue decision after verification
 
 Repeated reflection prompts:
+
 - What risk did you miss before seeing the report?
 - Do you agree that the AI should stop automated repair at this point?
 - What would you ask a senior engineer to review before production use?

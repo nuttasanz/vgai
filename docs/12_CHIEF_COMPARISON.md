@@ -41,6 +41,7 @@ The key difference is the target user and the added learning/verification layer:
 
 - Chief-style workflow: structure and control for experienced AI-agent users
 - This framework: structure, verification, stop decisions, risk reporting, and engineering learning support for less-experienced developers
+
 ## Chief Compatibility Mode: Framework Usage Sequence Diagram
 
 ```mermaid
