@@ -13,22 +13,30 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Build, Repair, Stop Conditions, and Related Execution Controls
 
-This document combines the **Build-and-Repair Loop** and **Stop Conditions**, the **Cost and Token Optimization Layer** (paired with repair/token budgets), **versioning / diff / rollback** controls, and the **Failure Mode Report** template. Verification gate definitions live in [05 Verification and Risk](05_VERIFICATION_AND_RISK.md).
+This document combines the **Build-and-Repair Loop** and **Stop Conditions**,
+the **Cost and Token Optimization Layer** (paired with repair/token budgets),
+**versioning / diff / rollback** controls, and the **Failure Mode Report**
+template. Verification gate definitions live in
+[05 Verification and Risk](05_VERIFICATION_AND_RISK.md).
 
 ---
 
 ## Build-and-Repair Loop with Stop Conditions
 
-The Build-and-Repair Loop is a controlled mechanism inside the AI-assisted implementation stage. Its purpose is to address a common problem in AI-generated code: the implementation may look plausible but fail to build, run, typecheck, or pass tests in the actual project context.
+The Build-and-Repair Loop is a controlled mechanism inside the AI-assisted
+implementation stage. Its purpose is to address a common problem in AI-generated
+code: the implementation may look plausible but fail to build, run, typecheck,
+or pass tests in the actual project context.
 
-The loop ensures that the system does not simply generate code and ask the user to trust it. Instead, the system attempts to verify whether the generated implementation works in a sandbox workspace before presenting the result as reliable.
+The loop ensures that the system does not simply generate code and ask the user
+to trust it. Instead, the system attempts to verify whether the generated
+implementation works in a sandbox workspace before presenting the result as
+reliable.
 
 The Build-and-Repair Loop follows this process:
 
@@ -38,8 +46,11 @@ The Build-and-Repair Loop follows this process:
 4. The AI agent analyzes the error logs and proposes a repair plan.
 5. The system allows the agent to apply controlled fixes to the relevant files.
 6. The system reruns the checks.
-7. The loop repeats until the checks pass or until the maximum repair attempt limit is reached.
-8. If the issue cannot be resolved within the allowed attempts, the system marks the result as Requires Human Review and includes the unresolved error in the final report.
+7. The loop repeats until the checks pass or until the maximum repair attempt
+   limit is reached.
+8. If the issue cannot be resolved within the allowed attempts, the system marks
+   the result as Requires Human Review and includes the unresolved error in the
+   final report.
 
 Example checks may include:
 
@@ -50,9 +61,16 @@ Example checks may include:
 - build check
 - dependency audit where appropriate
 
-The system should not allow unlimited repair attempts. A safe prototype may limit repair attempts to a small number, such as two or three iterations per task. This prevents the agent from repeatedly changing the project in uncontrolled ways.
+The system should not allow unlimited repair attempts. A safe prototype may
+limit repair attempts to a small number, such as two or three iterations per
+task. This prevents the agent from repeatedly changing the project in
+uncontrolled ways.
 
-The loop must also define explicit Stop Conditions to prevent over-repair. The agent should not continue modifying code only because it can still suggest improvements. Further repair should require evidence, such as a failed build, failed typecheck, failed test, unmet requirement, high-risk security finding, or unresolved verification gate failure.
+The loop must also define explicit Stop Conditions to prevent over-repair. The
+agent should not continue modifying code only because it can still suggest
+improvements. Further repair should require evidence, such as a failed build,
+failed typecheck, failed test, unmet requirement, high-risk security finding, or
+unresolved verification gate failure.
 
 Possible Stop Conditions include:
 
@@ -66,7 +84,8 @@ Possible Stop Conditions include:
 - the maximum repair attempt limit has been reached
 - further repair may introduce regression or exceed the approved task scope
 
-When Stop Conditions are met, the system should explicitly report a stop decision, such as:
+When Stop Conditions are met, the system should explicitly report a stop
+decision, such as:
 
 ```text
 Decision: Stop Automated Repair
@@ -79,7 +98,8 @@ Recommendation:
 - Human review may be requested only for optional improvement or final approval
 ```
 
-The system should also classify review findings by severity before deciding whether to repair:
+The system should also classify review findings by severity before deciding
+whether to repair:
 
 - Critical: must be repaired or escalated before passing the gate
 - High: should be repaired or escalated before passing the gate
@@ -87,7 +107,10 @@ The system should also classify review findings by severity before deciding whet
 - Low: should be reported but not automatically repaired
 - Informational: should be reported only
 
-This evidence-based stopping mechanism is important for less-experienced developers because they may repeatedly ask AI to review or improve code without knowing when the code is already good enough for the current scope. The system should help users avoid unnecessary changes, over-refactoring, and regression.
+This evidence-based stopping mechanism is important for less-experienced
+developers because they may repeatedly ask AI to review or improve code without
+knowing when the code is already good enough for the current scope. The system
+should help users avoid unnecessary changes, over-refactoring, and regression.
 
 The Build-and-Repair Loop should produce evidence such as:
 
@@ -99,31 +122,48 @@ The Build-and-Repair Loop should produce evidence such as:
 - unresolved issues
 - whether human review is required
 
-This loop is not intended to guarantee that the software is correct, secure, or production-ready. It only provides a stronger implementation-level verification step before the user trusts AI-generated code.
+This loop is not intended to guarantee that the software is correct, secure, or
+production-ready. It only provides a stronger implementation-level verification
+step before the user trusts AI-generated code.
 
 In short:
 
-AI should not only write code. The system should run the code, observe failures, attempt controlled repair, stop when evidence shows the code is good enough for the current scope, and report remaining risks.
+AI should not only write code. The system should run the code, observe failures,
+attempt controlled repair, stop when evidence shows the code is good enough for
+the current scope, and report remaining risks.
 
 ## Cost and Token Optimization Layer
 
-The Cost and Token Optimization Layer is a supporting system-design component for the AI coding agent workflow. Its purpose is to reduce unnecessary token usage, cost, latency, and context noise while preserving the quality of implementation, repair, verification, and reporting.
+The Cost and Token Optimization Layer is a supporting system-design component
+for the AI coding agent workflow. Its purpose is to reduce unnecessary token
+usage, cost, latency, and context noise while preserving the quality of
+implementation, repair, verification, and reporting.
 
-This layer is important because a coding-agent-style system may require multiple LLM calls across requirement analysis, codebase understanding, implementation planning, code modification, build/test repair, security review, production readiness review, and trust/risk reporting. Without cost and token control, the system may become expensive, slow, and less reliable because the model receives too much irrelevant context.
+This layer is important because a coding-agent-style system may require multiple
+LLM calls across requirement analysis, codebase understanding, implementation
+planning, code modification, build/test repair, security review, production
+readiness review, and trust/risk reporting. Without cost and token control, the
+system may become expensive, slow, and less reliable because the model receives
+too much irrelevant context.
 
-The system should not blindly send the entire repository, full build logs, or every file to the LLM. Instead, it should use cost-aware context management.
+The system should not blindly send the entire repository, full build logs, or
+every file to the LLM. Instead, it should use cost-aware context management.
 
 The Cost and Token Optimization Layer may include the following strategies:
 
 1. **Selective Context Retrieval**
-   - Select only task-relevant files or snippets instead of sending the full repository.
-   - Use the user task, file tree, imports/exports, framework conventions, and keyword or embedding-based search to identify relevant files.
+   - Select only task-relevant files or snippets instead of sending the full
+     repository.
+   - Use the user task, file tree, imports/exports, framework conventions, and
+     keyword or embedding-based search to identify relevant files.
    - Expand context only when the agent needs additional evidence.
 
 2. **Codebase Map**
    - Generate a compact project summary after repository upload.
-   - Include framework, language, main routes, database schema, authentication status, important folders, and key files.
-   - Reuse this map across planning, implementation, and verification steps instead of repeatedly summarizing the full project.
+   - Include framework, language, main routes, database schema, authentication
+     status, important folders, and key files.
+   - Reuse this map across planning, implementation, and verification steps
+     instead of repeatedly summarizing the full project.
 
 3. **Multi-Level Context**
    - Use different levels of context depending on the task:
@@ -135,33 +175,49 @@ The Cost and Token Optimization Layer may include the following strategies:
 
 4. **Diff-Based Repair Context**
    - During repair, avoid resending the entire project.
-   - Send the relevant original file, the latest diff, the failed command, the compressed error summary, and the previous repair summary.
-   - This helps the agent focus on what changed and why the current failure occurred.
+   - Send the relevant original file, the latest diff, the failed command, the
+     compressed error summary, and the previous repair summary.
+   - This helps the agent focus on what changed and why the current failure
+     occurred.
 
 5. **Error Log Compression**
    - Build, typecheck, lint, and test logs may be long.
-   - The system should extract the primary error, affected file and line, likely cause, related files, and failed command before sending the error to the LLM.
-   - Full logs can be stored for traceability but should not always be included in the prompt.
+   - The system should extract the primary error, affected file and line, likely
+     cause, related files, and failed command before sending the error to the
+     LLM.
+   - Full logs can be stored for traceability but should not always be included
+     in the prompt.
 
 6. **Caching**
-   - Cache codebase maps, file summaries, dependency summaries, route summaries, schema summaries, previous verification results, and build-log summaries.
+   - Cache codebase maps, file summaries, dependency summaries, route summaries,
+     schema summaries, previous verification results, and build-log summaries.
    - Reuse cached artifacts when the relevant files have not changed.
-   - Invalidate or refresh cached summaries when related files are modified by the agent.
+   - Invalidate or refresh cached summaries when related files are modified by
+     the agent.
 
 7. **Model Routing**
-   - Use smaller or cheaper models for simpler tasks such as file classification, summary formatting, or report formatting.
-   - Use stronger models for higher-risk reasoning such as implementation planning, security review, repair planning, and stop-condition decisions.
-   - The goal is not to always use the largest model, but to match model capability to task risk.
+   - Use smaller or cheaper models for simpler tasks such as file
+     classification, summary formatting, or report formatting.
+   - Use stronger models for higher-risk reasoning such as implementation
+     planning, security review, repair planning, and stop-condition decisions.
+   - The goal is not to always use the largest model, but to match model
+     capability to task risk.
 
 8. **Repair and Token Budgets**
    - Limit repair attempts per task.
-   - Track total LLM calls, prompt tokens, completion tokens, and estimated cost per task.
-   - Stop additional AI calls when the repair budget or token budget is exceeded, then produce a human review report.
-   - Combine token budgets with Stop Conditions to avoid endless review or refactoring cycles.
+   - Track total LLM calls, prompt tokens, completion tokens, and estimated cost
+     per task.
+   - Stop additional AI calls when the repair budget or token budget is
+     exceeded, then produce a human review report.
+   - Combine token budgets with Stop Conditions to avoid endless review or
+     refactoring cycles.
 
 9. **Evidence-Based AI Calls**
-   - Use deterministic tools whenever possible for file listing, package parsing, build execution, lint execution, typecheck execution, test execution, and diff generation.
-   - Call the LLM only when reasoning, planning, explanation, repair, or risk classification is needed.
+   - Use deterministic tools whenever possible for file listing, package
+     parsing, build execution, lint execution, typecheck execution, test
+     execution, and diff generation.
+   - Call the LLM only when reasoning, planning, explanation, repair, or risk
+     classification is needed.
 
 The layer should produce cost and token evidence such as:
 
@@ -175,11 +231,15 @@ The layer should produce cost and token evidence such as:
 - repair attempts used
 - whether token or repair budget limits were reached
 
-This layer does not replace the verification gates. It supports them by making the agent more efficient, focused, and less likely to make unnecessary or context-noisy changes.
+This layer does not replace the verification gates. It supports them by making
+the agent more efficient, focused, and less likely to make unnecessary or
+context-noisy changes.
 
 In short:
 
-The system should not only verify AI-generated code. It should also control how much context, cost, and model reasoning are used to produce, repair, and verify that code.
+The system should not only verify AI-generated code. It should also control how
+much context, cost, and model reasoning are used to produce, repair, and verify
+that code.
 
 ## Build-and-Repair Loop Sequence Diagram
 
@@ -220,7 +280,9 @@ sequenceDiagram
 
 ## Versioning, Diff Preview, and Rollback
 
-The system should never treat AI code changes as final without review. Before AI modifies code, the system should create a project snapshot or version checkpoint.
+The system should never treat AI code changes as final without review. Before AI
+modifies code, the system should create a project snapshot or version
+checkpoint.
 
 Required behavior:
 
@@ -254,7 +316,8 @@ Purpose:
 
 ## Failure Mode Report
 
-When AI cannot safely complete or repair a task, the system should generate a Failure Mode Report instead of continuing to modify code indefinitely.
+When AI cannot safely complete or repair a task, the system should generate a
+Failure Mode Report instead of continuing to modify code indefinitely.
 
 Suggested structure:
 
@@ -285,7 +348,8 @@ The existing session structure conflicts with the newly added RBAC logic.
 
 ## Why Automated Repair Stopped
 
-Repair budget was exceeded and further changes may affect authentication behavior.
+Repair budget was exceeded and further changes may affect authentication
+behavior.
 
 ## Recommended Next Step
 

@@ -1,14 +1,19 @@
 # VG-AI
 
-> **A framework-first, AI-managed, verification-governed software engineering workflow that orchestrates and governs existing AI coding agents.**
+> **A framework-first, AI-managed, verification-governed software engineering
+> workflow that orchestrates and governs existing AI coding agents.**
 
 ---
 
 ## What VG-AI is
 
-VG-AI is a portable workflow framework that orchestrates and governs existing AI coding agents — such as Claude Code, Codex, or Cursor-class tools — through rules, workflows, skills, templates, scripts, verification gates, and learning artifacts.
+VG-AI is a portable workflow framework that orchestrates and governs existing AI
+coding agents — such as Claude Code, Codex, or Cursor-class tools — through
+rules, workflows, skills, templates, scripts, verification gates, and learning
+artifacts.
 
-The framework helps less-experienced developers reduce blind trust in AI-assisted development through:
+The framework helps less-experienced developers reduce blind trust in
+AI-assisted development through:
 
 - multi-role critique and AI-generated rule review
 - deterministic evidence and verification gates
@@ -20,7 +25,13 @@ The framework helps less-experienced developers reduce blind trust in AI-assiste
 
 The core safe claim is:
 
-> This product vision proposes a framework-first, AI-managed, verification-governed software engineering workflow that orchestrates and governs existing AI coding agents. It helps less-experienced developers reduce blind trust in AI-assisted development through multi-role critique, AI-generated rule review, deterministic evidence, verification gates, controlled repair, stop conditions, confidence labels, audit trails, rollback support, engineering judgment scaffolding, and human review escalation.
+> This product vision proposes a framework-first, AI-managed,
+> verification-governed software engineering workflow that orchestrates and
+> governs existing AI coding agents. It helps less-experienced developers reduce
+> blind trust in AI-assisted development through multi-role critique,
+> AI-generated rule review, deterministic evidence, verification gates,
+> controlled repair, stop conditions, confidence labels, audit trails, rollback
+> support, engineering judgment scaffolding, and human review escalation.
 
 ---
 
@@ -71,4 +82,5 @@ vgai verify      # Run verification gates and summarize evidence
 vgai report      # Generate trust/risk, reflection, and handoff artifacts
 ```
 
-> Agent slash-command alias: `/vgai-init` is supported as an optional alias for use inside agent command UIs.
+> Agent slash-command alias: `/vgai-init` is supported as an optional alias for
+> use inside agent command UIs.

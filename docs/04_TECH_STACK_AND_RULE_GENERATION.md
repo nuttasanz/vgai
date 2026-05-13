@@ -13,50 +13,75 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Tech Stack and Rule Generation
 
-See also [02 AI-Managed Workflow](02_AI_MANAGED_WORKFLOW.md) (new project initialization) and [09 Agent Adapters and Framework Files](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) (instruction artifacts).
+See also [02 AI-Managed Workflow](02_AI_MANAGED_WORKFLOW.md) (new project
+initialization) and
+[09 Agent Adapters and Framework Files](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md)
+(instruction artifacts).
 
 ---
 
 ## New Projects vs Existing Projects
 
-The tech stack decision flow differs depending on whether the user is starting a new project or working within an existing repository.
+The tech stack decision flow differs depending on whether the user is starting a
+new project or working within an existing repository.
 
 **New projects:**
 
-The system performs AI-managed tech stack decision before rule generation. The user does not need to choose a stack directly. The AI Orchestrator coordinates multiple roles to propose, critique, review, and arbitrate the stack choice. Technical rules are then generated from the selected stack.
+The system performs AI-managed tech stack decision before rule generation. The
+user does not need to choose a stack directly. The AI Orchestrator coordinates
+multiple roles to propose, critique, review, and arbitrate the stack choice.
+Technical rules are then generated from the selected stack.
 
 **Existing projects:**
 
-The system first detects the tech stack from the existing repository (framework, language, database, authentication, test tooling, and build tooling). Rules are then generated from the detected stack. The system does not re-select a new technology stack at each task. Tech stack review applies only when the task itself requires a stack-level change, such as adding a new database, replacing a framework, or introducing a major dependency.
+The system first detects the tech stack from the existing repository (framework,
+language, database, authentication, test tooling, and build tooling). Rules are
+then generated from the detected stack. The system does not re-select a new
+technology stack at each task. Tech stack review applies only when the task
+itself requires a stack-level change, such as adding a new database, replacing a
+framework, or introducing a major dependency.
 
 ---
 
 ## AI Multi-Role Tech Stack Decision Flow (New Projects)
 
-For new projects, the system uses a risk-based multi-role decision flow to select a suitable technology stack. This ensures the stack choice is proposed, challenged, security-reviewed, and arbitrated before rules are generated.
+For new projects, the system uses a risk-based multi-role decision flow to
+select a suitable technology stack. This ensures the stack choice is proposed,
+challenged, security-reviewed, and arbitrated before rules are generated.
 
 The flow is:
 
-1. **Product Planner** identifies the system type, user roles, data sensitivity, deployment expectations, and learning goals from product discovery questions.
+1. **Product Planner** identifies the system type, user roles, data sensitivity,
+   deployment expectations, and learning goals from product discovery questions.
 
-2. **Tech Stack Recommender** proposes a suitable stack based on product needs, verification capability, maintainability, learning difficulty, deployment assumptions, and available tooling.
+2. **Tech Stack Recommender** proposes a suitable stack based on product needs,
+   verification capability, maintainability, learning difficulty, deployment
+   assumptions, and available tooling.
 
-3. **AI Critic** challenges the selected stack by comparing alternatives and identifying risks such as setup complexity, production limitations, security concerns, or over-engineering.
+3. **AI Critic** challenges the selected stack by comparing alternatives and
+   identifying risks such as setup complexity, production limitations, security
+   concerns, or over-engineering.
 
-4. **Security and Risk Reviewer** checks whether the proposed stack introduces authentication, authorization, data, secret, migration, or production-readiness concerns.
+4. **Security and Risk Reviewer** checks whether the proposed stack introduces
+   authentication, authorization, data, secret, migration, or
+   production-readiness concerns.
 
-5. **AI Arbiter** selects the final stack under a stated confidence level and writes a Tech Stack Decision Record.
+5. **AI Arbiter** selects the final stack under a stated confidence level and
+   writes a Tech Stack Decision Record.
 
-6. **AI Rule Generator** creates stack-aware project rules, workflow rules, security rules, testing rules, production-readiness rules, and learning rules from the selected stack.
+6. **AI Rule Generator** creates stack-aware project rules, workflow rules,
+   security rules, testing rules, production-readiness rules, and learning rules
+   from the selected stack.
 
-If the user lacks technical knowledge, the system may select safe prototype defaults, record the rationale, assumptions, alternatives considered, risks, confidence level, and production-review limitations — rather than forcing the user to make technical choices they cannot yet evaluate.
+If the user lacks technical knowledge, the system may select safe prototype
+defaults, record the rationale, assumptions, alternatives considered, risks,
+confidence level, and production-review limitations — rather than forcing the
+user to make technical choices they cannot yet evaluate.
 
 ---
 
@@ -93,13 +118,16 @@ Vitest for unit tests
 Playwright (optional future E2E)
 ```
 
-The system then writes a Tech Stack Decision Record (see below) and proceeds to rule generation.
+The system then writes a Tech Stack Decision Record (see below) and proceeds to
+rule generation.
 
 ---
 
 ## Tech Stack Decision Record
 
-After the AI Arbiter selects the final stack, the system writes a Tech Stack Decision Record. This record is a governance artifact that must exist before rules are generated.
+After the AI Arbiter selects the final stack, the system writes a Tech Stack
+Decision Record. This record is a governance artifact that must exist before
+rules are generated.
 
 Example structure:
 
@@ -125,7 +153,8 @@ later require stronger data integrity and production-like behavior.
 
 ## Alternatives Considered
 
-- SQLite: simpler for local prototype but less suitable for production concurrency.
+- SQLite: simpler for local prototype but less suitable for production
+  concurrency.
 - MongoDB: less aligned with structured relational scheduling data.
 - Laravel: viable, but not selected because this product direction favors
   TypeScript-based AI coding agent compatibility.
@@ -143,8 +172,8 @@ later require stronger data integrity and production-like behavior.
 
 ## Confidence
 
-Medium-high for prototype and learning use.
-Medium for production use until reviewed by a senior developer.
+Medium-high for prototype and learning use. Medium for production use until
+reviewed by a senior developer.
 
 ## Reviewed By
 
@@ -157,54 +186,84 @@ Medium for production use until reviewed by a senior developer.
 
 ## AI-Generated Rule Lifecycle
 
-Because the product vision allows AI to create rules, rules must have a lifecycle. AI-generated rules should not be enforced simply because they were generated. The system should govern rules through generation, critique, testing, arbitration, enforcement, monitoring, and update.
+Because the product vision allows AI to create rules, rules must have a
+lifecycle. AI-generated rules should not be enforced simply because they were
+generated. The system should govern rules through generation, critique, testing,
+arbitration, enforcement, monitoring, and update.
 
 The lifecycle is:
 
 1. **Trust Kernel Installed**
-   - `vgai init` installs the minimal meta-rules that govern AI autonomy. Some agent environments may document the same entrypoint as a slash command (for example `/vgai-init`) for compatibility with agent command UX.
-   - These rules define how AI-generated outputs become reviewable and trustworthy.
+   - `vgai init` installs the minimal meta-rules that govern AI autonomy. Some
+     agent environments may document the same entrypoint as a slash command (for
+     example `/vgai-init`) for compatibility with agent command UX.
+   - These rules define how AI-generated outputs become reviewable and
+     trustworthy.
 
 2. **Project and Product Discovery**
-   - The system identifies project type, users, workflows, data sensitivity, deployment assumptions, learning goals, and technical constraints.
+   - The system identifies project type, users, workflows, data sensitivity,
+     deployment assumptions, learning goals, and technical constraints.
 
 3. **Tech Stack Decision**
-   - For **new projects**: AI proposes and selects a suitable stack using multiple roles when the decision is high-impact. The system writes a Tech Stack Decision Record with rationale, alternatives, assumptions, risks, and confidence.
-   - For **existing projects**: The system detects the current stack from the repository. Tech stack decision applies only if the task requires a stack-level change.
+   - For **new projects**: AI proposes and selects a suitable stack using
+     multiple roles when the decision is high-impact. The system writes a Tech
+     Stack Decision Record with rationale, alternatives, assumptions, risks, and
+     confidence.
+   - For **existing projects**: The system detects the current stack from the
+     repository. Tech stack decision applies only if the task requires a
+     stack-level change.
 
 4. **Candidate Rule Generation**
-   - AI generates candidate rules for workflow, project conventions, security, testing, production readiness, cost/token usage, repair, stop conditions, and learning.
+   - AI generates candidate rules for workflow, project conventions, security,
+     testing, production readiness, cost/token usage, repair, stop conditions,
+     and learning.
 
 5. **Rule Critique**
-   - A separate AI role checks for unsupported rules, over-broad rules, contradictions, false positives, false negatives, and rules that should be converted into guided questions instead of hard constraints.
+   - A separate AI role checks for unsupported rules, over-broad rules,
+     contradictions, false positives, false negatives, and rules that should be
+     converted into guided questions instead of hard constraints.
 
 6. **Security and Risk Review**
-   - Security-sensitive rules are reviewed for authentication, authorization, data deletion, sensitive data, secrets, migration, dependency, and production risks.
+   - Security-sensitive rules are reviewed for authentication, authorization,
+     data deletion, sensitive data, secrets, migration, dependency, and
+     production risks.
 
 7. **Rule Scenario Testing**
    - AI creates examples of when a rule should trigger and when it should not.
-   - Deterministic scripts or structured checks may use these scenarios to evaluate rule behavior.
+   - Deterministic scripts or structured checks may use these scenarios to
+     evaluate rule behavior.
 
 8. **Rule Arbitration**
-   - Rules are classified into the rule registry (see Rule Registry Categories below).
+   - Rules are classified into the rule registry (see Rule Registry Categories
+     below).
 
 9. **Instruction Artifact Generation**
-   - The system generates or updates `AGENTS.md`, `CLAUDE.md`, skill files, workflow files, and templates from the governed rule registry.
-   - A Safety Reviewer checks that these instruction files do not allow bypassing verification, uncontrolled repair, unsafe autonomy, or unsupported production/security claims.
+   - The system generates or updates `AGENTS.md`, `CLAUDE.md`, skill files,
+     workflow files, and templates from the governed rule registry.
+   - A Safety Reviewer checks that these instruction files do not allow
+     bypassing verification, uncontrolled repair, unsafe autonomy, or
+     unsupported production/security claims.
 
 10. **Runtime Enforcement and Evidence Collection**
-    - Rules are applied during planning, implementation, verification, repair, reporting, and reflection.
-    - The system records which rules triggered, what evidence supported them, and whether they caused useful or noisy behavior.
+    - Rules are applied during planning, implementation, verification, repair,
+      reporting, and reflection.
+    - The system records which rules triggered, what evidence supported them,
+      and whether they caused useful or noisy behavior.
 
 11. **Rule Update Loop**
-    - After each task, AI may propose rule updates based on failures, repeated risks, false positives, missed checks, user confusion, or human review feedback.
-    - Proposed updates must re-enter the rule review lifecycle before becoming active.
+    - After each task, AI may propose rule updates based on failures, repeated
+      risks, false positives, missed checks, user confusion, or human review
+      feedback.
+    - Proposed updates must re-enter the rule review lifecycle before becoming
+      active.
 
 ---
 
 ## Rule Registry Categories
 
-After arbitration, every rule is classified into one of the following categories. The rule registry is the authoritative source for what rules are currently active, pending, or retired.
+After arbitration, every rule is classified into one of the following
+categories. The rule registry is the authoritative source for what rules are
+currently active, pending, or retired.
 
 | Category                       | Description                                                                                                                                                                                              |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -246,19 +305,24 @@ Rejected Rules:
 
 ## AI-Generated AGENTS.md / CLAUDE.md Review Flow
 
-Instruction artifacts such as `AGENTS.md` and `CLAUDE.md` are generated from the governed rule registry. Because incorrect instruction files can cause the entire workflow to behave incorrectly, they must be reviewed by a Safety Reviewer before use.
+Instruction artifacts such as `AGENTS.md` and `CLAUDE.md` are generated from the
+governed rule registry. Because incorrect instruction files can cause the entire
+workflow to behave incorrectly, they must be reviewed by a Safety Reviewer
+before use.
 
 The review flow is:
 
 1. **Rule Arbiter** compiles the rule registry into its final categories.
-2. **AI Instruction Generator** produces `AGENTS.md`, `CLAUDE.md`, and other agent-specific instruction files from the active and warning rules.
+2. **AI Instruction Generator** produces `AGENTS.md`, `CLAUDE.md`, and other
+   agent-specific instruction files from the active and warning rules.
 3. **AI Safety Reviewer** checks that the generated instruction files:
    - do not allow bypassing verification gates
    - do not allow uncontrolled or unlimited repair
    - do not claim unsafe autonomy without evidence
    - do not make unsupported production-readiness or security claims
    - correctly reference stop conditions and human-review triggers
-4. If issues are found, the instruction files are revised and re-reviewed before being written to the project.
+4. If issues are found, the instruction files are revised and re-reviewed before
+   being written to the project.
 5. The final approved instruction files are written to the project repository.
 
 Generated instruction file paths:

@@ -13,20 +13,23 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Examples and Scenarios
 
-The first walkthrough is **Chief compatibility mode** (user-driven agent following framework files). The second is **full product mode** (AI-managed stack and rule generation before implementation). See [12 Chief Comparison](12_CHIEF_COMPARISON.md) and [02 AI-Managed Workflow](02_AI_MANAGED_WORKFLOW.md).
+The first walkthrough is **Chief compatibility mode** (user-driven agent
+following framework files). The second is **full product mode** (AI-managed
+stack and rule generation before implementation). See
+[12 Chief Comparison](12_CHIEF_COMPARISON.md) and
+[02 AI-Managed Workflow](02_AI_MANAGED_WORKFLOW.md).
 
 ---
 
 # Example Chief-Style Project Creation Scenario
 
-This scenario illustrates how the framework may work from the beginning of a new project without building a new web app or new agentic AI.
+This scenario illustrates how the framework may work from the beginning of a new
+project without building a new web app or new agentic AI.
 
 Assume the user wants to create a clinic booking system.
 
@@ -64,7 +67,8 @@ CLAUDE.md
 
 ## Step 3: Start an existing AI coding agent
 
-The user opens Claude Code, Codex, or another compatible agent in the project directory.
+The user opens Claude Code, Codex, or another compatible agent in the project
+directory.
 
 ```bash
 claude
@@ -76,7 +80,8 @@ or:
 codex
 ```
 
-The agent reads the framework instructions from `AGENTS.md`, `CLAUDE.md`, or compatible skill/instruction files.
+The agent reads the framework instructions from `AGENTS.md`, `CLAUDE.md`, or
+compatible skill/instruction files.
 
 ## Step 4: Provide the initial project idea
 
@@ -123,27 +128,29 @@ Risk: access control and audit logging should be considered before production.
 
 ## Step 6: The framework records assumptions
 
-If the user accepts defaults or says "I don't know," the agent writes an Assumption Log:
+If the user accepts defaults or says "I don't know," the agent writes an
+Assumption Log:
 
 ```markdown
 # Assumption Log
 
 ## Authentication
 
-The system assumes email/password login for prototype.
-Reason: user did not specify authentication method.
-Risk: authentication design requires human review before production.
+The system assumes email/password login for prototype. Reason: user did not
+specify authentication method. Risk: authentication design requires human review
+before production.
 
 ## Appointment cancellation
 
-The system assumes patients can cancel their own appointments and admins can cancel any appointment.
-Reason: default prototype permission model.
-Risk: cancellation policy may need stakeholder review.
+The system assumes patients can cancel their own appointments and admins can
+cancel any appointment. Reason: default prototype permission model. Risk:
+cancellation policy may need stakeholder review.
 ```
 
 ## Step 7: The agent implements only after approval
 
-After the user approves the acceptance criteria and implementation plan, the agent may create or edit code.
+After the user approves the acceptance criteria and implementation plan, the
+agent may create or edit code.
 
 After code changes, the framework requires:
 
@@ -156,7 +163,8 @@ After code changes, the framework requires:
 
 ## Step 8: The framework stops unnecessary AI changes
 
-If required checks pass and remaining issues are low severity, the framework requires a stop decision:
+If required checks pass and remaining issues are low severity, the framework
+requires a stop decision:
 
 ```text
 Decision: Stop automated modification.
@@ -179,11 +187,14 @@ The framework generates:
 - Skill Progression update
 - Mentor Mode next task recommendations
 
-This makes the framework useful not only for building the project, but also for helping the user learn how to think more like a software engineer.
+This makes the framework useful not only for building the project, but also for
+helping the user learn how to think more like a software engineer.
 
 # Example AI-Managed New Project Creation Scenario
 
-This scenario illustrates how the evolved system may work when the user starts from a blank project and does not know which technology stack or rules to choose.
+This scenario illustrates how the evolved system may work when the user starts
+from a blank project and does not know which technology stack or rules to
+choose.
 
 ## Step 1: User provides a product idea
 
@@ -197,7 +208,9 @@ I do not know which tech stack to use. Please choose what is appropriate.
 
 ## Step 2: AI asks only context questions the user can answer
 
-The system should not force the user to choose between Next.js, Laravel, PostgreSQL, SQLite, JWT, sessions, Vitest, or Playwright directly. Instead, it asks product-level questions such as:
+The system should not force the user to choose between Next.js, Laravel,
+PostgreSQL, SQLite, JWT, sessions, Vitest, or Playwright directly. Instead, it
+asks product-level questions such as:
 
 ```text
 1. Is this a prototype first, or will real users use it soon?
@@ -207,7 +220,8 @@ The system should not force the user to choose between Next.js, Laravel, Postgre
 5. Do you want the stack to be easy to learn and verify?
 ```
 
-If the user does not know, the AI may select safe prototype defaults and record them as assumptions.
+If the user does not know, the AI may select safe prototype defaults and record
+them as assumptions.
 
 ## Step 3: AI roles select the technology stack
 
@@ -252,13 +266,18 @@ Playwright as optional future E2E testing
 
 ## Why This Stack Was Selected
 
-The system is a role-based web application with structured relational data such as users, doctors, appointments, roles, and schedules. TypeScript and Prisma improve maintainability and verification. PostgreSQL is selected because the system may later require stronger data integrity and production-like behavior.
+The system is a role-based web application with structured relational data such
+as users, doctors, appointments, roles, and schedules. TypeScript and Prisma
+improve maintainability and verification. PostgreSQL is selected because the
+system may later require stronger data integrity and production-like behavior.
 
 ## Alternatives Considered
 
-- SQLite: simpler for local prototype but less suitable for production-like concurrency.
+- SQLite: simpler for local prototype but less suitable for production-like
+  concurrency.
 - MongoDB: less aligned with structured relational scheduling data.
-- Laravel: viable, but not selected because this product direction favors TypeScript-based AI coding agent compatibility.
+- Laravel: viable, but not selected because this product direction favors
+  TypeScript-based AI coding agent compatibility.
 
 ## Assumptions
 
@@ -273,13 +292,15 @@ The system is a role-based web application with structured relational data such 
 
 ## Confidence
 
-Medium-high for prototype and learning use.
-Medium for production use until reviewed.
+Medium-high for prototype and learning use. Medium for production use until
+reviewed.
 ```
 
 ## Step 5: AI generates and reviews project rules
 
-AI generates stack-aware rules, then a critic and risk reviewer examine them before enforcement. Some rules become hard rules, some become warnings, some become guided questions, and some become human-review triggers.
+AI generates stack-aware rules, then a critic and risk reviewer examine them
+before enforcement. Some rules become hard rules, some become warnings, some
+become guided questions, and some become human-review triggers.
 
 Example rule classification:
 
@@ -306,11 +327,14 @@ Human Review Triggers:
 
 ## Step 6: AI generates `AGENTS.md` and `CLAUDE.md`
 
-The system generates agent instruction files from the reviewed rule registry. A safety reviewer checks that these files do not allow bypassing verification, uncontrolled repair, unsafe autonomy, or unsupported security/production claims.
+The system generates agent instruction files from the reviewed rule registry. A
+safety reviewer checks that these files do not allow bypassing verification,
+uncontrolled repair, unsafe autonomy, or unsupported security/production claims.
 
 ## Step 7: AI begins implementation under governed rules
 
-Only after stack decision, rule generation, rule review, instruction generation, and safety review does the AI proceed to scaffold and implement the project.
+Only after stack decision, rule generation, rule review, instruction generation,
+and safety review does the AI proceed to scaffold and implement the project.
 
 # Expected Output of the System
 
@@ -368,7 +392,9 @@ A user wants to build a clinic booking system.
 
 The user provides:
 
-"I want to build a clinic booking system with patients, doctors, and admins. Patients can book appointments, cancel appointments, view appointment history, and receive LINE notifications."
+"I want to build a clinic booking system with patients, doctors, and admins.
+Patients can book appointments, cancel appointments, view appointment history,
+and receive LINE notifications."
 
 The system should:
 
@@ -380,21 +406,26 @@ The system should:
 6. Add missing security and production tasks
 7. Break work into milestones
 8. Help implement tasks
-9. Use the Cost and Token Optimization Layer to select relevant project context, compress logs, and avoid unnecessary LLM calls
-10. Run the Build-and-Repair Loop to check whether generated code can build, lint, typecheck, or pass tests where possible
-11. Apply Stop Conditions to decide whether further AI repair is necessary or should be stopped
+9. Use the Cost and Token Optimization Layer to select relevant project context,
+   compress logs, and avoid unnecessary LLM calls
+10. Run the Build-and-Repair Loop to check whether generated code can build,
+    lint, typecheck, or pass tests where possible
+11. Apply Stop Conditions to decide whether further AI repair is necessary or
+    should be stopped
 12. Run verification gates
 13. Generate a final trust report
-14. Generate an Engineering Reflection Report explaining what changed, why it changed, which trade-offs were made, what evidence supports the result, and what the user should learn
-15. Ask repeated reflection questions so the user can compare their own reasoning with the system's findings
+14. Generate an Engineering Reflection Report explaining what changed, why it
+    changed, which trade-offs were made, what evidence supports the result, and
+    what the user should learn
+15. Ask repeated reflection questions so the user can compare their own
+    reasoning with the system's findings
 16. Update the user's Skill Progression Map
 
 Example final report:
 
 Project: Clinic Booking System
 
-Status:
-Prototype-ready, but not production-ready
+Status: Prototype-ready, but not production-ready
 
 Covered:
 
@@ -419,7 +450,8 @@ Stop-condition result:
 
 - automated repair stopped after required checks passed
 - no Critical or High implementation errors remained
-- remaining warning was classified as a security improvement requiring review, not an unlimited repair trigger
+- remaining warning was classified as a security improvement requiring review,
+  not an unlimited repair trigger
 - recommendation: do not continue automated refactoring without human approval
 
 Cost/token optimization result:
@@ -452,17 +484,23 @@ Learning feedback:
 
 Engineering reflection:
 
-- the agent changed authorization-related files because privileged actions must be protected at the API layer, not only in the UI
-- the selected approach centralizes admin checks to reduce duplicated authorization logic
-- an alternative would be inline role checks in each route, but that may increase inconsistency and maintenance cost
-- the remaining risks are not reasons for unlimited AI refactoring; they should be split into separate tasks or reviewed by a human
+- the agent changed authorization-related files because privileged actions must
+  be protected at the API layer, not only in the UI
+- the selected approach centralizes admin checks to reduce duplicated
+  authorization logic
+- an alternative would be inline role checks in each route, but that may
+  increase inconsistency and maintenance cost
+- the remaining risks are not reasons for unlimited AI refactoring; they should
+  be split into separate tasks or reviewed by a human
 
 Skill progression update:
 
 - Security Awareness: practiced RBAC and API authorization
 - Testing Strategy: needs more unauthorized-case testing
-- Production Readiness: needs more logging, monitoring, backup, and deployment planning
-- Risk-Based Decision Making: practiced stop vs continue decision after verification
+- Production Readiness: needs more logging, monitoring, backup, and deployment
+  planning
+- Risk-Based Decision Making: practiced stop vs continue decision after
+  verification
 
 Repeated reflection prompts:
 

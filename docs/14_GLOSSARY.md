@@ -13,10 +13,8 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Glossary
 

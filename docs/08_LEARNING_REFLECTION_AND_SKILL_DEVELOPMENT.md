@@ -13,22 +13,32 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Learning, Reflection, and Skill Development
 
-This document is the primary home for **learning and reflection mechanics** under the AI-managed, verification-governed model: structured artifacts (**Engineering Reflection Report**, **reflection question sets**, **project decision log** patterns, **rubric-based scoring**), **skill progression**, **mentor mode**, **repeated reflection**, **post-task learning** flows, and the **engineering learning sequence diagram**.
+This document is the primary home for **learning and reflection mechanics**
+under the AI-managed, verification-governed model: structured artifacts
+(**Engineering Reflection Report**, **reflection question sets**, **project
+decision log** patterns, **rubric-based scoring**), **skill progression**,
+**mentor mode**, **repeated reflection**, **post-task learning** flows, and the
+**engineering learning sequence diagram**.
 
-For the **thinking and judgment capabilities** those artifacts are meant to strengthen—critical thinking, problem framing, assumption management, trade-offs, risk, verification, security, system impact, stop/continue and human-review judgment, and calibrated AI skepticism—see [07 Engineering Thinking and Judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md).
+For the **thinking and judgment capabilities** those artifacts are meant to
+strengthen—critical thinking, problem framing, assumption management,
+trade-offs, risk, verification, security, system impact, stop/continue and
+human-review judgment, and calibrated AI skepticism—see
+[07 Engineering Thinking and Judgment](07_ENGINEERING_THINKING_AND_JUDGMENT.md).
 
 ---
 
 ## Engineering Reflection Report
 
-After each major task or development session, the system should generate an Engineering Reflection Report. This report is a structured learning document that the user can revisit later to understand how the task was approached and what engineering lessons were involved.
+After each major task or development session, the system should generate an
+Engineering Reflection Report. This report is a structured learning document
+that the user can revisit later to understand how the task was approached and
+what engineering lessons were involved.
 
 The report may include:
 
@@ -39,12 +49,14 @@ The report may include:
 
 2. **Project Context Understanding**
    - What the agent understood about the project structure
-   - Framework, language, database, authentication status, important routes, and relevant files
+   - Framework, language, database, authentication status, important routes, and
+     relevant files
    - Assumptions made by the agent
 
 3. **Requirement and Assumption Analysis**
    - Functional requirements inferred from the task
-   - Non-functional requirements such as security, maintainability, and production readiness
+   - Non-functional requirements such as security, maintainability, and
+     production readiness
    - Missing or ambiguous requirements
    - Assumptions that should be confirmed by the user or a human reviewer
 
@@ -65,7 +77,8 @@ The report may include:
 
 7. **Engineering Trade-offs**
    - Benefits and drawbacks of the chosen approach
-   - Impact on maintainability, complexity, scalability, security, and delivery speed
+   - Impact on maintainability, complexity, scalability, security, and delivery
+     speed
 
 8. **Build-and-Repair History**
    - Commands executed
@@ -81,13 +94,16 @@ The report may include:
 10. **Security and Privacy Review**
     - Authentication and authorization concerns
     - Sensitive data concerns
-    - Input validation, secret management, audit logging, and rate limiting concerns
+    - Input validation, secret management, audit logging, and rate limiting
+      concerns
 
 11. **Maintainability Review**
-    - Modularity, duplication, naming, separation of concerns, testability, and long-term readability
+    - Modularity, duplication, naming, separation of concerns, testability, and
+      long-term readability
 
 12. **Production Readiness Review**
-    - Environment configuration, deployment assumptions, logging, monitoring, migration, backup, health checks, and rollback concerns
+    - Environment configuration, deployment assumptions, logging, monitoring,
+      migration, backup, health checks, and rollback concerns
 
 13. **Test Coverage Review**
     - What behavior is tested
@@ -101,7 +117,8 @@ The report may include:
     - Whether senior, security, or production review is required
 
 15. **Debugging and Observability Notes**
-    - If this feature fails in production, what logs, metrics, traces, or error information would help debug it
+    - If this feature fails in production, what logs, metrics, traces, or error
+      information would help debug it
     - Whether the current implementation provides enough observability
 
 16. **Key Lessons Learned**
@@ -116,29 +133,42 @@ The report may include:
 
 ## Engineering Reflection Questions
 
-The system should guide users with recurring reflection questions. These questions should help users move from task-level coding toward system-level engineering judgment.
+The system should guide users with recurring reflection questions. These
+questions should help users move from task-level coding toward system-level
+engineering judgment.
 
 Core questions include:
 
 1. Did the AI understand the real problem and project context correctly?
-2. What requirements, assumptions, or missing information influenced the implementation?
+2. What requirements, assumptions, or missing information influenced the
+   implementation?
 3. What parts of the system were changed, and why?
-4. What alternative approaches were available, and why was this approach selected?
-5. What trade-offs were made in terms of complexity, maintainability, security, scalability, and delivery speed?
+4. What alternative approaches were available, and why was this approach
+   selected?
+5. What trade-offs were made in terms of complexity, maintainability, security,
+   scalability, and delivery speed?
 6. What evidence shows that the implementation works at a basic level?
 7. What security or privacy risks remain?
 8. Will this code be maintainable by another developer in the future?
 9. Is the implementation production-ready, prototype-ready, or still incomplete?
 10. Are the tests sufficient to protect important behavior?
-11. Should the AI continue modifying the code, stop, or escalate to human review?
-12. If this feature fails in production, how would the team detect, debug, and recover from it?
-13. What should the user learn next to improve their software engineering judgment?
+11. Should the AI continue modifying the code, stop, or escalate to human
+    review?
+12. If this feature fails in production, how would the team detect, debug, and
+    recover from it?
+13. What should the user learn next to improve their software engineering
+    judgment?
 
-These questions are intended to train the user to think beyond whether the code merely runs. A junior developer may ask, "Does the code work?" A senior engineer also asks, "Is this appropriate for the system, risk level, team, and future maintenance of the project?"
+These questions are intended to train the user to think beyond whether the code
+merely runs. A junior developer may ask, "Does the code work?" A senior engineer
+also asks, "Is this appropriate for the system, risk level, team, and future
+maintenance of the project?"
 
 ## Project Decision Log
 
-The system should maintain a decision log for significant engineering decisions. This helps the user learn not only what code changed, but why a certain design direction was chosen.
+The system should maintain a decision log for significant engineering decisions.
+This helps the user learn not only what code changed, but why a certain design
+direction was chosen.
 
 Suggested structure:
 
@@ -147,17 +177,15 @@ Suggested structure:
 
 ## Decision 001: Use role-based access control
 
-Reason:
-The system has different user types and privileged operations.
+Reason: The system has different user types and privileged operations.
 
-Alternative Considered:
-Hardcode admin email checks inside each route.
+Alternative Considered: Hardcode admin email checks inside each route.
 
-Why Not Chosen:
-Hardcoding admin checks increases maintenance risk and is less scalable.
+Why Not Chosen: Hardcoding admin checks increases maintenance risk and is less
+scalable.
 
-Trade-off:
-Centralized RBAC improves maintainability but requires careful testing because shared authorization logic becomes critical.
+Trade-off: Centralized RBAC improves maintainability but requires careful
+testing because shared authorization logic becomes critical.
 ```
 
 Purpose:
@@ -168,7 +196,9 @@ Purpose:
 
 ## Rubric-Based Scoring
 
-The system may optionally provide heuristic scores to help users prioritize issues. These scores should never be presented as certification or proof that the software is secure or production-ready.
+The system may optionally provide heuristic scores to help users prioritize
+issues. These scores should never be presented as certification or proof that
+the software is secure or production-ready.
 
 Possible scoring areas:
 
@@ -182,15 +212,19 @@ Possible scoring areas:
 
 Important limitation:
 
-The score is a heuristic assessment for prioritization and learning. It is not a guarantee of correctness, security, or production readiness.
+The score is a heuristic assessment for prioritization and learning. It is not a
+guarantee of correctness, security, or production readiness.
 
 ---
 
 ## Skill Progression Map
 
-The Skill Progression Map is a learning profile that tracks which software engineering skill areas the user has practiced through AI-assisted tasks.
+The Skill Progression Map is a learning profile that tracks which software
+engineering skill areas the user has practiced through AI-assisted tasks.
 
-The map should not be treated as a certification of seniority. Instead, it is a reflective progress tool that helps the user see which areas they have been exposed to and which areas need more practice.
+The map should not be treated as a certification of seniority. Instead, it is a
+reflective progress tool that helps the user see which areas they have been
+exposed to and which areas need more practice.
 
 Possible skill areas include:
 
@@ -288,12 +322,16 @@ Risk-Based Decision Making: Practiced 3 tasks / Improving stop vs repair decisio
 
 ## Repeated Reflection Workflow
 
-Repeated Reflection is a workflow that asks users to think before and after receiving AI feedback. This is important because users learn more when they actively compare their own reasoning with the system's reasoning instead of only reading AI-generated explanations.
+Repeated Reflection is a workflow that asks users to think before and after
+receiving AI feedback. This is important because users learn more when they
+actively compare their own reasoning with the system's reasoning instead of only
+reading AI-generated explanations.
 
 The workflow may include:
 
 1. **Pre-Reflection**
-   - Before the AI reveals its full analysis, the system asks the user what they think.
+   - Before the AI reveals its full analysis, the system asks the user what they
+     think.
    - Example questions:
      - What files do you think need to change?
      - What risks do you expect?
@@ -301,10 +339,12 @@ The workflow may include:
      - When should the AI stop modifying the code?
 
 2. **AI Analysis and Implementation**
-   - The AI performs codebase analysis, planning, implementation, verification, repair, and reporting.
+   - The AI performs codebase analysis, planning, implementation, verification,
+     repair, and reporting.
 
 3. **Post-Reflection**
-   - After the report is generated, the system asks the user to compare their initial reasoning with the AI's findings.
+   - After the report is generated, the system asks the user to compare their
+     initial reasoning with the AI's findings.
    - Example questions:
      - What did you miss?
      - What did the AI miss?
@@ -312,22 +352,27 @@ The workflow may include:
      - Do you agree with the stop or human review decision?
 
 4. **Learning Summary**
-   - The system summarizes the user's learning gaps, improvements, and next topics.
+   - The system summarizes the user's learning gaps, improvements, and next
+     topics.
 
 5. **Skill Map Update**
-   - The system updates the Skill Progression Map based on the task and reflection evidence.
+   - The system updates the Skill Progression Map based on the task and
+     reflection evidence.
 
-Repeated Reflection helps the system act less like a code generator and more like a guided learning environment.
+Repeated Reflection helps the system act less like a code generator and more
+like a guided learning environment.
 
 ## Mentor Mode
 
-Mentor Mode is an interaction style where the system guides the user toward understanding instead of always giving immediate final answers.
+Mentor Mode is an interaction style where the system guides the user toward
+understanding instead of always giving immediate final answers.
 
 Mentor Mode may include:
 
 1. **Socratic Questions**
    - The system asks guiding questions before revealing the answer.
-   - Example: "Before adding admin-only deletion, where should authorization be enforced: UI, API, or both? Why?"
+   - Example: "Before adding admin-only deletion, where should authorization be
+     enforced: UI, API, or both? Why?"
 
 2. **Hints Before Solutions**
    - The system provides hints in increasing detail.
@@ -337,16 +382,20 @@ Mentor Mode may include:
      - Hint 3: Authorization should be enforced on the server/API side.
 
 3. **Progressive Disclosure**
-   - The system first explains the concept simply, then provides deeper technical detail when the user requests it.
+   - The system first explains the concept simply, then provides deeper
+     technical detail when the user requests it.
 
 4. **Explain-Then-Ask Mode**
-   - The system explains a concept and then asks the user to apply it to the current project.
+   - The system explains a concept and then asks the user to apply it to the
+     current project.
 
 5. **Challenge Mode**
-   - The system asks the user to identify risks, tests, or trade-offs before showing the system's answer.
+   - The system asks the user to identify risks, tests, or trade-offs before
+     showing the system's answer.
 
 6. **Review Simulation**
-   - The system simulates questions a senior engineer might ask during code review.
+   - The system simulates questions a senior engineer might ask during code
+     review.
    - Example:
      - Why did you choose this architecture?
      - What happens if this API is called by a non-admin user?
@@ -354,13 +403,16 @@ Mentor Mode may include:
      - What is the rollback plan if the migration fails?
 
 7. **Answer Comparison**
-   - The system compares the user's answer with the AI's answer and highlights differences.
+   - The system compares the user's answer with the AI's answer and highlights
+     differences.
 
-Mentor Mode should be optional because some users may want fast implementation, while others may want deeper learning. The system may support modes such as:
+Mentor Mode should be optional because some users may want fast implementation,
+while others may want deeper learning. The system may support modes such as:
 
 - Fast Mode: prioritize implementation and verification
 - Guided Mode: include short reflection questions and explanations
-- Mentor Mode: include deeper reasoning, questions, hints, and learning exercises
+- Mentor Mode: include deeper reasoning, questions, hints, and learning
+  exercises
 
 ## Post-Task Learning Workflow
 
@@ -383,7 +435,8 @@ A complete learning-oriented workflow may look like this:
 15. Skill Progression Map is updated
 16. Suggested learning path and human review checklist are produced
 
-This workflow helps users learn not only what changed, but why it changed, what risks remain, and what engineering skill they should develop next.
+This workflow helps users learn not only what changed, but why it changed, what
+risks remain, and what engineering skill they should develop next.
 
 ## Engineering Learning Sequence Diagram
 

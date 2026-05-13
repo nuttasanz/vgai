@@ -13,18 +13,26 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Product Vision (Overview)
 
-This folder contains the **full-scope product vision** split into focused documents. The product is **not** primarily a web app or a new coding agent: it is a **portable, framework-first, AI-managed, verification-governed** workflow system that **orchestrates and governs existing AI coding agents** (for example Claude Code, Codex, or Cursor-class tools) through rules, workflows, skills, templates, scripts, verification gates, and learning artifacts.
+This folder contains the **full-scope product vision** split into focused
+documents. The product is **not** primarily a web app or a new coding agent: it
+is a **portable, framework-first, AI-managed, verification-governed** workflow
+system that **orchestrates and governs existing AI coding agents** (for example
+Claude Code, Codex, or Cursor-class tools) through rules, workflows, skills,
+templates, scripts, verification gates, and learning artifacts.
 
-**Full product mode** emphasizes AI-managed project setup, stack and rule generation, multi-role critique, and governed execution. **Chief compatibility mode** emphasizes project-local agent instructions so experienced users can run structured workflows with their existing agent.
+**Full product mode** emphasizes AI-managed project setup, stack and rule
+generation, multi-role critique, and governed execution. **Chief compatibility
+mode** emphasizes project-local agent instructions so experienced users can run
+structured workflows with their existing agent.
 
-The architecture is documented as **eleven major product layers** (the **major product layers** model) in [01 Product Principles](01_PRODUCT_PRINCIPLES.md#full-scope-product-vision-eleven-major-product-layers).
+The architecture is documented as **eleven major product layers** (the **major
+product layers** model) in
+[01 Product Principles](01_PRODUCT_PRINCIPLES.md#full-scope-product-vision-eleven-major-product-layers).
 
 ## Read next
 
@@ -47,6 +55,8 @@ The architecture is documented as **eleven major product layers** (the **major p
 
 ## One-line positioning
 
-> **AI may manage the workflow, but verification governs whether the workflow can be trusted.**
+> **AI may manage the workflow, but verification governs whether the workflow
+> can be trusted.**
 
-The repository previously kept a single large vision file; that file is now replaced by this `docs/` module plus a short pointer at the repository root.
+The repository previously kept a single large vision file; that file is now
+replaced by this `docs/` module plus a short pointer at the repository root.

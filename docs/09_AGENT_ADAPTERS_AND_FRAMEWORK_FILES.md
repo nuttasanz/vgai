@@ -13,26 +13,36 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Agent Adapters and Framework Files
 
-This file retains the opening framing from the original monolithic vision’s combined “productization + platform” discussion, **scoped here** to **solo-first adoption**, **project-local framework layout**, **agent compatibility modes**, and **rule / instruction layers** that existing coding agents read and follow. Git/PR workflow, CLI, optional web app, integrations, audit trail, roadmap, and the high-level product diagram are in [10 Productization and Platform](10_PRODUCTIZATION_AND_PLATFORM.md).
+This file retains the opening framing from the original monolithic vision’s
+combined “productization + platform” discussion, **scoped here** to **solo-first
+adoption**, **project-local framework layout**, **agent compatibility modes**,
+and **rule / instruction layers** that existing coding agents read and follow.
+Git/PR workflow, CLI, optional web app, integrations, audit trail, roadmap, and
+the high-level product diagram are in
+[10 Productization and Platform](10_PRODUCTIZATION_AND_PLATFORM.md).
 
 ## Agent-facing framework surfaces (repository layout, compatibility, rules)
 
-The following describes how the framework becomes **adoptable and governable inside a repo** without implying that adapters _are_ the full platform: adapters are how governed execution reaches **existing** agents.
+The following describes how the framework becomes **adoptable and governable
+inside a repo** without implying that adapters _are_ the full platform: adapters
+are how governed execution reaches **existing** agents.
 
 The most important product shift is:
 
-> The framework can work without a web app by using project-local files, agent instructions, skills, scripts, and reports. A web app can be added later as a dashboard or interface layer.
+> The framework can work without a web app by using project-local files, agent
+> instructions, skills, scripts, and reports. A web app can be added later as a
+> dashboard or interface layer.
 
 ## Solo-First Framework Path
 
-The first product version can be designed for one user: a developer who wants to use Claude Code, Codex, or another AI coding agent more safely and systematically.
+The first product version can be designed for one user: a developer who wants to
+use Claude Code, Codex, or another AI coding agent more safely and
+systematically.
 
 A solo-first framework workflow may include:
 
@@ -46,10 +56,13 @@ A solo-first framework workflow may include:
 8. Let the external agent edit code under framework rules
 9. Run build/typecheck/lint/test scripts
 10. Apply Build-and-Repair Loop and Stop Conditions
-11. Generate Trust/Risk Report, Engineering Reflection Report, Human Review Handoff, Decision Log, and Skill Progression update
+11. Generate Trust/Risk Report, Engineering Reflection Report, Human Review
+    Handoff, Decision Log, and Skill Progression update
 12. Continue with the next task suggested by Mentor Mode
 
-This solo-first path should not require team accounts, organization policies, or a full web platform in the beginning. Those can be added later after the core framework proves useful for individual developers.
+This solo-first path should not require team accounts, organization policies, or
+a full web platform in the beginning. Those can be added later after the core
+framework proves useful for individual developers.
 
 ## Framework Package Structure
 
@@ -101,11 +114,13 @@ AGENTS.md
 CLAUDE.md
 ```
 
-The framework files tell the external coding agent how to behave. The agent still performs implementation, but the framework controls the process.
+The framework files tell the external coding agent how to behave. The agent
+still performs implementation, but the framework controls the process.
 
 ## Agent Compatibility Layer
 
-The product should be designed to work with existing agentic coding tools. It should not depend on one vendor or one agent.
+The product should be designed to work with existing agentic coding tools. It
+should not depend on one vendor or one agent.
 
 Potential compatibility modes:
 
@@ -119,24 +134,37 @@ Potential compatibility modes:
 This allows the framework to operate in several modes:
 
 1. **Framework-only mode**: project-local markdown rules, templates, and scripts
-2. **Claude Code mode**: Claude Code reads `CLAUDE.md` and follows framework workflows
+2. **Claude Code mode**: Claude Code reads `CLAUDE.md` and follows framework
+   workflows
 3. **Codex mode**: Codex reads `AGENTS.md` or Codex-specific skill instructions
-4. **Companion mode**: user uses any coding agent, then runs the framework to verify diff/reports
-5. **MCP / Tool Server mode**: external agents call framework tools such as `run_verification_gate()` or `check_stop_condition()`
-6. **Web app mode**: a future interface layer for dashboard, reports, learning history, and configuration
+4. **Companion mode**: user uses any coding agent, then runs the framework to
+   verify diff/reports
+5. **MCP / Tool Server mode**: external agents call framework tools such as
+   `run_verification_gate()` or `check_stop_condition()`
+6. **Web app mode**: a future interface layer for dashboard, reports, learning
+   history, and configuration
 
 ## Core Rules, AI-Generated Rules, and Project Rules
 
-The framework should separate rules into layers, but in the evolved full-scope vision the AI may also generate and refine many of these rules. The important distinction is that not all rules have the same authority. Some rules are part of the minimal trust kernel, while other rules are AI-generated, project-derived, task-specific, or learning-oriented.
+The framework should separate rules into layers, but in the evolved full-scope
+vision the AI may also generate and refine many of these rules. The important
+distinction is that not all rules have the same authority. Some rules are part
+of the minimal trust kernel, while other rules are AI-generated,
+project-derived, task-specific, or learning-oriented.
 
 ### Trust Kernel Rules
 
-Trust Kernel Rules are minimal meta-rules installed during **`vgai init`** (some agent UIs may also expose an optional slash alias such as `/vgai-init`). They govern AI autonomy and should exist before AI generates project-specific rules. They are not detailed technical prescriptions. They are process-safety rules that prevent blind trust in AI-generated outputs.
+Trust Kernel Rules are minimal meta-rules installed during **`vgai init`** (some
+agent UIs may also expose an optional slash alias such as `/vgai-init`). They
+govern AI autonomy and should exist before AI generates project-specific rules.
+They are not detailed technical prescriptions. They are process-safety rules
+that prevent blind trust in AI-generated outputs.
 
 Examples:
 
 - AI-generated rules are not trusted automatically.
-- Every generated rule must include rationale, scope, risk, confidence, and examples.
+- Every generated rule must include rationale, scope, risk, confidence, and
+  examples.
 - Do not implement before requirements and acceptance criteria exist.
 - Do not silently invent missing requirements.
 - Record assumptions when defaults are used.
@@ -148,20 +176,28 @@ Examples:
 
 ### AI-Generated Project Rules
 
-For a new project, project rules should normally be generated after product discovery and tech-stack decision. The AI may create candidate rules, but they should pass through rule critique, risk review, scenario testing, and arbitration before being used as active rules.
+For a new project, project rules should normally be generated after product
+discovery and tech-stack decision. The AI may create candidate rules, but they
+should pass through rule critique, risk review, scenario testing, and
+arbitration before being used as active rules.
 
-Examples after selecting a stack such as Next.js, TypeScript, Prisma, and PostgreSQL:
+Examples after selecting a stack such as Next.js, TypeScript, Prisma, and
+PostgreSQL:
 
 ```markdown
 # Project AI Rules
 
 - Use TypeScript for all new source files.
-- Follow Next.js App Router conventions unless the project uses another routing model.
+- Follow Next.js App Router conventions unless the project uses another routing
+  model.
 - Use Prisma for database access.
 - Do not introduce a second ORM without justification.
-- API routes and server actions that mutate protected data must enforce server-side authorization.
-- Database schema changes are high risk and require migration and rollback notes where possible.
-- Authentication and authorization changes require security review flags before production use.
+- API routes and server actions that mutate protected data must enforce
+  server-side authorization.
+- Database schema changes are high risk and require migration and rollback notes
+  where possible.
+- Authentication and authorization changes require security review flags before
+  production use.
 - Run available build, typecheck, lint, and test checks after implementation.
 ```
 
@@ -169,16 +205,23 @@ Examples after selecting a stack such as Next.js, TypeScript, Prisma, and Postgr
 
 Rules should be classified by enforcement level:
 
-- **Hard Rule** — blocks the workflow if violated, such as implementing before acceptance criteria exist.
-- **Warning Rule** — reports a concern but does not automatically block, such as missing audit logging in an early prototype.
-- **Guided Question Rule** — converts an uncertain technical or product decision into a guided question or autonomous default with an assumption log.
-- **Human Review Trigger** — flags decisions that require senior, security, instructor, or production review before being treated as production-ready.
-- **Experimental Rule** — used for learning or observation but not trusted as a strong engineering rule.
-- **Rejected or Deprecated Rule** — not used because it was unsupported, over-broad, noisy, or contradicted project evidence.
+- **Hard Rule** — blocks the workflow if violated, such as implementing before
+  acceptance criteria exist.
+- **Warning Rule** — reports a concern but does not automatically block, such as
+  missing audit logging in an early prototype.
+- **Guided Question Rule** — converts an uncertain technical or product decision
+  into a guided question or autonomous default with an assumption log.
+- **Human Review Trigger** — flags decisions that require senior, security,
+  instructor, or production review before being treated as production-ready.
+- **Experimental Rule** — used for learning or observation but not trusted as a
+  strong engineering rule.
+- **Rejected or Deprecated Rule** — not used because it was unsupported,
+  over-broad, noisy, or contradicted project evidence.
 
 ### Generated Instruction Artifacts
 
-The system may generate or update agent instruction files from the governed rule registry:
+The system may generate or update agent instruction files from the governed rule
+registry:
 
 ```text
 AGENTS.md
@@ -191,11 +234,16 @@ CLAUDE.md
 .vgai/rules/human-review-triggers.md
 ```
 
-These files should be reviewed by AI role critics or safety reviewers before use because incorrect instruction files can cause the entire workflow to behave incorrectly.
+These files should be reviewed by AI role critics or safety reviewers before use
+because incorrect instruction files can cause the entire workflow to behave
+incorrectly.
 
 ### Task Rules
 
-Task-specific rules are generated from a user task as acceptance criteria. In autonomous mode, AI may select safe prototype defaults when the user lacks technical knowledge, but the system must record the assumptions, risks, and confidence level.
+Task-specific rules are generated from a user task as acceptance criteria. In
+autonomous mode, AI may select safe prototype defaults when the user lacks
+technical knowledge, but the system must record the assumptions, risks, and
+confidence level.
 
 Example:
 
@@ -210,4 +258,7 @@ Example:
 - Build and typecheck must pass.
 ```
 
-The user should be allowed to accept, edit, ask for explanation, or mark uncertain items for human review. If the user does not know how to answer, the system may choose a prototype default and record it as an AI-selected assumption rather than silently treating it as a confirmed requirement.
+The user should be allowed to accept, edit, ask for explanation, or mark
+uncertain items for human review. If the user does not know how to answer, the
+system may choose a prototype default and record it as an AI-selected assumption
+rather than silently treating it as a confirmed requirement.

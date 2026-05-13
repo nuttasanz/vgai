@@ -13,20 +13,23 @@ part_of: VG-AI product vision (modular)
 [08 Learning](08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) ·
 [09 Adapters](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) ·
 [10 Platform](10_PRODUCTIZATION_AND_PLATFORM.md) ·
-[11 Research](11_RESEARCH_POSITIONING.md) ·
-[12 Chief](12_CHIEF_COMPARISON.md) ·
-[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) ·
-[Glossary](14_GLOSSARY.md)
+[11 Research](11_RESEARCH_POSITIONING.md) · [12 Chief](12_CHIEF_COMPARISON.md) ·
+[13 Examples](13_EXAMPLES_AND_SCENARIOS.md) · [Glossary](14_GLOSSARY.md)
 
 # Productization and Platform
 
-This document continues [09 Agent Adapters and Framework Files](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) with **distribution and product surfaces**: Git/PR, CLI/TUI, optional web dashboard, integrations, governance-adjacent product features, phased roadmap, and the product vision diagram.
+This document continues
+[09 Agent Adapters and Framework Files](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md)
+with **distribution and product surfaces**: Git/PR, CLI/TUI, optional web
+dashboard, integrations, governance-adjacent product features, phased roadmap,
+and the product vision diagram.
 
 ---
 
 ## Git and Pull Request Workflow
 
-A product-ready version should eventually support Git-based development instead of only local patch files.
+A product-ready version should eventually support Git-based development instead
+of only local patch files.
 
 Possible flow:
 
@@ -52,11 +55,13 @@ Potential outputs:
 - unresolved risks
 - learning report link
 
-This feature should be treated as a product-beta or platform feature rather than a requirement for the first research prototype.
+This feature should be treated as a product-beta or platform feature rather than
+a requirement for the first research prototype.
 
 ## CLI / TUI Layer
 
-Before building a full web app, the product may include a CLI or TUI that helps initialize, run, and inspect the framework.
+Before building a full web app, the product may include a CLI or TUI that helps
+initialize, run, and inspect the framework.
 
 Example commands and skill entrypoints:
 
@@ -77,30 +82,46 @@ vgai reflect
 vgai review-diff
 ```
 
-The CLI does not need to be the coding agent. It can act as an orchestrator that prepares framework files, calls AI roles, routes work between local LLMs and stronger cloud models where appropriate, invokes existing coding agents such as Claude Code or Codex, runs deterministic scripts, collects evidence, and generates reports.
+The CLI does not need to be the coding agent. It can act as an orchestrator that
+prepares framework files, calls AI roles, routes work between local LLMs and
+stronger cloud models where appropriate, invokes existing coding agents such as
+Claude Code or Codex, runs deterministic scripts, collects evidence, and
+generates reports.
 
 ### Workflow Command Responsibilities
 
-The commands should represent workflow boundaries, not merely shortcuts. For example:
+The commands should represent workflow boundaries, not merely shortcuts. For
+example:
 
-- `vgai init` installs the trust kernel, workflow templates, AI role contracts, and scripts.
+- `vgai init` installs the trust kernel, workflow templates, AI role contracts,
+  and scripts.
 - `vgai discover` builds the project/product profile and codebase map.
-- `vgai decide-stack` uses risk-based multi-role AI decision flow to select a technology stack for a new project.
-- `vgai generate-rules` creates candidate workflow, project, technical, security, testing, production, and learning rules.
+- `vgai decide-stack` uses risk-based multi-role AI decision flow to select a
+  technology stack for a new project.
+- `vgai generate-rules` creates candidate workflow, project, technical,
+  security, testing, production, and learning rules.
 - `vgai review-rules` critiques and risk-reviews candidate rules.
-- `vgai compile-rules` produces the rule registry and generated instruction artifacts such as `AGENTS.md` and `CLAUDE.md`.
-- `vgai plan` produces acceptance criteria, assumption logs, impact analysis, risk classification, and implementation plan.
-- `vgai run` executes the task workflow through an existing coding agent or compatible adapter.
+- `vgai compile-rules` produces the rule registry and generated instruction
+  artifacts such as `AGENTS.md` and `CLAUDE.md`.
+- `vgai plan` produces acceptance criteria, assumption logs, impact analysis,
+  risk classification, and implementation plan.
+- `vgai run` executes the task workflow through an existing coding agent or
+  compatible adapter.
 - `vgai verify` runs verification gates and summarizes evidence.
-- `vgai repair` applies the Build-and-Repair policy under budget and risk limits.
+- `vgai repair` applies the Build-and-Repair policy under budget and risk
+  limits.
 - `vgai stop-check` decides whether further AI modification is justified.
-- `vgai report` generates Trust/Risk, Failure Mode, Human Review Handoff, and Decision Log artifacts.
-- `vgai reflect` generates Engineering Reflection, Skill Progression, and learning-path artifacts.
-- `vgai review-diff` reviews an existing diff created by any external AI coding agent.
+- `vgai report` generates Trust/Risk, Failure Mode, Human Review Handoff, and
+  Decision Log artifacts.
+- `vgai reflect` generates Engineering Reflection, Skill Progression, and
+  learning-path artifacts.
+- `vgai review-diff` reviews an existing diff created by any external AI coding
+  agent.
 
 ## Optional Web App / Dashboard Layer
 
-A web app can still be useful, but it should be positioned as an optional interface layer rather than the core product.
+A web app can still be useful, but it should be positioned as an optional
+interface layer rather than the core product.
 
 Possible web app responsibilities:
 
@@ -113,11 +134,13 @@ Possible web app responsibilities:
 - human review handoff viewer
 - guided verification form
 
-This allows the product to start framework-first and later become a richer platform.
+This allows the product to start framework-first and later become a richer
+platform.
 
 ## Integration Layer / Tool Connector Layer
 
-A long-term product may connect with external software development tools such as:
+A long-term product may connect with external software development tools such
+as:
 
 - GitHub / GitLab
 - issue trackers such as Jira, Linear, or GitHub Issues
@@ -129,11 +152,13 @@ A long-term product may connect with external software development tools such as
 - monitoring and observability tools
 - communication tools such as Slack or email
 
-The integration layer should be modular. The framework can start with local tools and scripts first, while product versions can add connectors later.
+The integration layer should be modular. The framework can start with local
+tools and scripts first, while product versions can add connectors later.
 
 ## Audit Trail and AI Governance
 
-Because the AI agent reads code, modifies files, runs commands, and makes recommendations, the product should record an audit trail.
+Because the AI agent reads code, modifies files, runs commands, and makes
+recommendations, the product should record an audit trail.
 
 The audit trail should answer:
 
@@ -151,11 +176,13 @@ The audit trail should answer:
 - Who approved high-risk changes?
 - What reports were generated?
 
-This helps users understand and trust the system, and it supports debugging, review, governance, and future team adoption.
+This helps users understand and trust the system, and it supports debugging,
+review, governance, and future team adoption.
 
 ## Secret Detection and Sensitive Data Protection
 
-A real product must protect user code and sensitive data. Uploaded projects or local repositories may contain secrets or private configuration files.
+A real product must protect user code and sensitive data. Uploaded projects or
+local repositories may contain secrets or private configuration files.
 
 The system should include safeguards such as:
 
@@ -168,11 +195,13 @@ The system should include safeguards such as:
 - clean up sandbox workspaces after sessions if a sandbox is used
 - allow users to delete session data and reports
 
-This feature is especially important if the product later supports repository connections, cloud execution, or team use.
+This feature is especially important if the product later supports repository
+connections, cloud execution, or team use.
 
 ## Independent AI Review / Backstop Reviewer
 
-The coding agent should not be the only judge of its own output. A stronger product can include an independent review step.
+The coding agent should not be the only judge of its own output. A stronger
+product can include an independent review step.
 
 Possible flow:
 
@@ -192,11 +221,13 @@ The independent reviewer may focus on:
 - whether stop conditions are appropriate
 - whether human review is needed
 
-This helps reduce self-confirmation by the coding agent and strengthens trust in the final report.
+This helps reduce self-confirmation by the coding agent and strengthens trust in
+the final report.
 
 ## Quality and Impact Dashboard
 
-A product version should show whether the framework is actually helping the user.
+A product version should show whether the framework is actually helping the
+user.
 
 Possible dashboard metrics:
 
@@ -213,11 +244,14 @@ Possible dashboard metrics:
 - learning topics covered
 - skill progression by engineering area
 
-The dashboard should not certify that the user is a senior engineer or that the software is secure. It should provide learning and engineering evidence that helps the user understand progress and remaining gaps.
+The dashboard should not certify that the user is a senior engineer or that the
+software is secure. It should provide learning and engineering evidence that
+helps the user understand progress and remaining gaps.
 
 ## Optional Team and Organization Mode
 
-Although the product may begin as a solo tool, it can later support team use. Team mode should be optional and should not be required for the first version.
+Although the product may begin as a solo tool, it can later support team use.
+Team mode should be optional and should not be required for the first version.
 
 Possible future team features:
 
@@ -231,7 +265,8 @@ Possible future team features:
 - approval workflow
 - shared decision log
 
-This enables the product to evolve from a personal engineering mentor into a team-level AI-assisted software engineering platform.
+This enables the product to evolve from a personal engineering mentor into a
+team-level AI-assisted software engineering platform.
 
 ## Product Roadmap
 
@@ -286,7 +321,8 @@ The full product vision can be organized into phases:
 - enterprise governance
 - shared learning and review dashboards
 
-The first research implementation should be selected from this roadmap later. The current document intentionally keeps the full product direction visible.
+The first research implementation should be selected from this roadmap later.
+The current document intentionally keeps the full product direction visible.
 
 ## Product Vision Diagram
 
