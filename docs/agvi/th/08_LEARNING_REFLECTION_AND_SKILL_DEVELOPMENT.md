@@ -176,6 +176,37 @@ Mentor Mode ไม่ควรแสร้งว่าเป็น senior human 
 5. เสนอ next learning path หรือ next development task
 6. บันทึก open questions สำหรับ human review หรือ future tasks
 
+## การ trigger Reflection อัตโนมัติผ่าน Hook
+
+Engineering Reflection Report ไม่ควรรอให้ user ขอเอง และไม่ควรพึ่งให้ agent สร้าง reconstruction จาก working memory — ทั้งสองวิธีมีช่องโหว่เสมอ
+
+framework ใช้ **Stop hook** trigger reflection อัตโนมัติเมื่อ task จบ hook อ่านจาก `.vgai/observations.jsonl` — append-only event log ที่ PreToolUse และ PostToolUse hooks เก็บไว้ตลอด session (ดู [doc 09 — Hook-Based Enforcement Layer](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md#hook-based-enforcement-layer))
+
+แต่ละ entry บันทึก tool event หนึ่งครั้ง:
+
+```json
+{
+  "timestamp": "2026-05-18T14:23:01Z",
+  "event": "PostToolUse",
+  "tool": "Edit",
+  "file": "src/lib/auth.ts",
+  "outcome": "success",
+  "task_id": "task-042",
+  "repair_iteration": 2
+}
+```
+
+Reflector อ่าน log นี้เพื่อตอบคำถามที่ Engineering Reflection Report ต้องการ: ไฟล์ใดถูกแก้และเมื่อใด, มี repair iterations กี่รอบ, checks ไหนผ่านหรือ fail, session หยุดเมื่อใดและเพราะอะไร
+
+`observations.jsonl` ยังเป็น data source ของ:
+
+- Trust/Risk Reports (สิ่งที่เกิดขึ้น, สิ่งที่ผ่าน)
+- Failure Mode Reports (สิ่งที่ fail, จำนวน repair attempts)
+- Project Decision Logs (decisions ที่เกิดภายใต้เงื่อนไขใด)
+- Skill Progression Map updates (skill areas ที่ปรากฏใน session นี้)
+
+model ราคาถูกอาจใช้ scan `observations.jsonl` เพื่อตรวจ patterns และ compress session ก่อน Reflector สร้าง full report (ดู [doc 06 — Model Routing](06_BUILD_REPAIR_AND_STOP_CONDITIONS.md#cost-and-token-optimization-layer))
+
 ## Engineering Learning Sequence Diagram
 
 ```mermaid

@@ -57,21 +57,43 @@ framework ควรใช้ **risk-based multi-role governance**:
 - **Level 2: Single AI with validation** — summaries เสี่ยงต่ำ report drafts, log compression และ template filling
 - **Level 3: Multi-role AI review** — tech-stack selection, architecture decisions, rule generation, `AGENTS.md` / `CLAUDE.md` generation, security-sensitive changes, risk classification, repair strategy, stop-condition decisions และ final trust/risk reporting
 
-บทบาท AI ที่เป็นไปได้:
+### การเลือก Governance Level
 
-- **Product / Requirement Planner** — ทำให้ product goals, users, workflows และ acceptance criteria ชัดเจน
-- **Tech Stack Recommender** — เสนอ stack จาก requirements, learning needs, verification capability และ deployment assumptions
-- **Rule Generator** — สร้าง candidate workflow, project, technical, security, testing และ learning rules
-- **Rule Critic** — ท้าทายกฎที่กว้างเกินไป ไม่มีหลักฐาน ขัดแย้ง หรือเสี่ยง
-- **Security and Risk Reviewer** — โฟกัส authentication, authorization, sensitive data, deletion, secrets, migrations และ production-sensitive decisions
-- **Rule Scenario Designer** — สร้างตัวอย่างว่า rule ควร trigger และไม่ควร trigger เมื่อใด
-- **Rule Arbiter** — จัดประเภทกฎเป็น active, warning, guided-question, human-review-trigger, rejected หรือ experimental
-- **Implementation Planner** — แปลง accepted rules และ requirements เป็น task plans
-- **Builder / Coding Agent** — implement การเปลี่ยนแปลงผ่าน Claude Code, Codex, agent แบบ Cursor หรือ agent ในอนาคต
-- **Verifier** — ประเมิน build/test evidence, verification gates และ acceptance criteria
-- **Repair Agent** — เสนอและใช้ controlled repairs เมื่อ checks fail
-- **Stop-Condition Reviewer** — ตัดสินว่าการแก้ไขเพิ่มโดย AI ยังมี evidence รองรับหรือไม่
-- **Reflection and Learning Agent** — สร้าง engineering reflection, skill progression และ learning-path artifacts
+| Task risk level | Governance level ที่ต้องใช้ |
+| --- | --- |
+| Low | Level 1 สำหรับเก็บ evidence; Level 2 สำหรับ summary และ reporting |
+| Medium | Level 1 สำหรับ evidence; Level 2 สำหรับ summary; Level 3 ถ้าแตะ rules, architecture หรือ security decisions |
+| High | Level 1 สำหรับ evidence; Level 3 required สำหรับทุก decision — ห้ามใช้ single AI judgment |
+| Rule/framework changes | Level 3 เสมอ — ไม่ว่าจะมีกี่ไฟล์ |
 
-โมเดลหลายบทบาทนี้อาจ implement ได้หลายแบบ เช่น model เดียวที่ prompt เป็นคนละ role, calls แยกบริบท, cloud models หลายตัว, local LLM สำหรับ summary/log compression เสี่ยงต่ำ, deterministic scripts สำหรับ evidence หรือ MCP/CLI orchestrator ที่ประสาน components เหล่านี้
+Risk classification rubric: [doc 05 — Risk-Based Approval](05_VERIFICATION_AND_RISK.md#risk-based-approval)
+
+### ความหมายของ "บทบาท AI"
+
+**บทบาท AI** คือ prompt template — ชุดคำสั่งที่บอก LLM ให้คิดจากมุมมองเฉพาะและสร้าง output ประเภทที่กำหนด บทบาทไม่ใช่ AI service แยกต่างหาก, API endpoint แยก หรือ model deployment แยก บทบาทสองอย่างขึ้นไปอาจรวมอยู่ใน LLM call เดียวผ่าน multi-section prompt ที่แต่ละส่วนให้ model คิดจากมุมมองต่างกันก่อนสร้าง output รวม
+
+จำนวน LLM calls ถูกกำหนดโดย governance level ไม่ใช่จำนวนบทบาท ที่ Level 3 prompt เดียวอาจให้ model สร้าง proposal ก่อน แล้ววิจารณ์จากมุม security แล้วจัดประเภทผลลัพธ์ — ทั้งหมดใน call เดียว
+
+### กลุ่มบทบาท AI (5 กลุ่ม)
+
+framework กำหนด **5 กลุ่มบทบาท** ภายในกลุ่ม sub-roles อาจรวมเป็น multi-section prompt เดียว หรือแยกเป็น sequential calls เมื่อต้องการ independent context
+
+| กลุ่มบทบาท | Sub-roles ที่รวม | ความรับผิดชอบ |
+| --- | --- | --- |
+| **Planner** | Product / Requirement Planner, Tech Stack Recommender, Implementation Planner | ทำให้ goals ชัดเจน เลือก technology stack และสร้าง task plans ก่อนเริ่ม implement |
+| **Rule Workshop** | Rule Generator, Rule Critic, Security and Risk Reviewer, Rule Scenario Designer, Rule Arbiter | สร้าง candidate rules, วิจารณ์, เพิ่มมุม security, สร้าง trigger scenarios และจัดประเภทแต่ละ rule |
+| **Builder** | Builder / Coding Agent | implement การเปลี่ยนแปลงที่อนุมัติแล้วผ่าน coding agent ที่มีอยู่ (Claude Code, Codex, Cursor หรือ agent ที่คล้ายกัน) |
+| **Verifier** | Verifier, Repair Agent, Stop-Condition Reviewer | ประเมิน verification gates, เสนอ controlled repairs และตัดสินว่าควรหยุดเมื่อใด |
+| **Reflector** | Reflection and Learning Agent | สร้าง engineering reflection, skill progression และ learning-path artifacts |
+
+เมื่อต้องใช้ governance Level 3 Rule Workshop อาจแบ่งเป็น 2 sequential calls เพื่อรักษา independence:
+
+- **Generation call**: Rule Generator + Rule Arbiter — เสนอและจัดประเภทกฎ
+- **Critique call**: Rule Critic + Security and Risk Reviewer + Rule Scenario Designer — ท้าทาย ทดสอบ และ validate กฎจาก context แยกต่างหาก
+
+Builder เป็น call แยกเสมอ เพราะโต้ตอบกับ external coding agent tool แทนที่จะทำ internal reasoning
+
+เมื่อการวิจารณ์ต้องเป็น independent (Level 3) critique prompt ไม่ควรได้รับ reasoning trace เต็มของ generation prompt ใน context เป้าหมายคือตรวจจับ assumptions ที่ผิดพลาด ไม่ใช่ validate chain ที่ model เห็นด้วยอยู่แล้ว
+
+โมเดลนี้อาจ implement ได้หลายแบบ เช่น model เดียวที่ prompt เป็นคนละ role sections, sequential calls ที่มี isolated contexts, cloud models หลายตัว, local LLM สำหรับ summarization เสี่ยงต่ำ, deterministic scripts สำหรับ evidence collection หรือ MCP/CLI orchestrator ที่ประสาน components เหล่านี้
 

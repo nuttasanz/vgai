@@ -193,31 +193,75 @@ violating business rules or security expectations.
 
 ## Risk-Based Approval
 
-Not all AI-generated changes have the same risk. The system should classify
-proposed code changes by risk level before applying them.
+Every task must be classified before implementation begins. The classification
+determines the approval path and verification requirements.
 
-Suggested risk levels:
+### Risk Classification Rubric
 
-- Low Risk: formatting, comments, simple text changes, non-functional UI copy
-- Medium Risk: validation, refactoring, API response changes, non-critical
-  business logic
-- High Risk: authentication, authorization, database schema, migrations,
-  deletion logic, payment, security-sensitive code, secret handling, production
-  configuration
+| Level | Criteria — any one condition being true sets the level |
+| --- | --- |
+| **Low** | ≤2 files changed, no auth/authz, no data deletion, ≤50 lines, no new dependencies, no schema changes |
+| **Medium** | 3–10 files OR new dependency OR touches existing schema OR test gap OR significant business logic |
+| **High** | auth/authz, deletion, migration, secret handling, payment, schema change, external API with side effects, production config |
 
-Suggested approval policy:
+If any single High criterion is true, the task is High — regardless of file count.
 
-- Low Risk changes may be auto-applied in sandbox but still shown as a diff
-- Medium Risk changes require user approval before application
-- High Risk changes require explicit approval and should usually generate a
-  human review suggestion
+### Approval Requirements
 
-Purpose:
+| Level | Required before implementation starts |
+| --- | --- |
+| Low | User acknowledges the plan (implicit) |
+| Medium | User confirms plan + diff preview before applying (TK-010) |
+| High | User confirms plan + diff preview + Human Review Handoff Package on completion (TK-011) |
 
-- reduce the risk of AI modifying sensitive code without user awareness
-- teach users that different engineering changes require different levels of
-  review
-- connect implementation decisions with risk-based software engineering judgment
+## Finding Severity Levels
+
+Gate 2 classifies findings before deciding whether to repair or stop.
+
+### Pre-Report Confidence Gate
+
+Before flagging any finding, the Verifier must answer four questions:
+
+1. Can I cite the exact file path and line number?
+2. Can I describe the concrete failure mode (input → state → bad outcome)?
+3. Have I read the surrounding context — callers, imports, and tests?
+4. Is the severity defensible relative to the actual risk, not just the
+   pattern?
+
+If any answer is uncertain, the finding must be downgraded one severity level
+or dropped entirely. A review that produces zero findings is a valid and
+expected result. Manufactured findings and speculative nits erode trust in the
+Verifier and produce unnecessary repair cycles.
+
+| Level | Meaning | Examples | Gate decision |
+| --- | --- | --- | --- |
+| **Critical** | Must repair or escalate before gate passes | auth bypass, secret leak, data loss, broken build | Block gate — repair or escalate required |
+| **High** | Should repair or escalate before gate passes | failing test on critical path, missing server-side authz | Repair or escalate before reporting complete |
+| **Medium** | May repair if user approves and scope allows | unused code, minor type widening, missing edge-case handling | Does not block gate; repair only if in scope |
+| **Low** | Report but do not auto-repair | formatting, naming style, non-blocking lint warning | Log only — repair not required |
+| **Informational** | Report only | dependency version note, future improvement suggestion | No action required |
+
+Once all Critical and High findings are resolved, the system must stop even if
+Medium or Low findings remain (see TK-009).
+
+## Confidence Levels
+
+Every AI output — plan, risk classification, tech stack recommendation, or
+report — must include a confidence label and rationale.
+
+| Level | Meaning | When to use |
+| --- | --- | --- |
+| **High** | Established pattern, strong evidence, low ambiguity | Standard CRUD, well-known library, clear requirements |
+| **Medium** | Reasonable approach but assumptions present; user should verify key points | Some requirements unclear, pattern new to this codebase |
+| **Low** | Significant uncertainty; human review recommended before proceeding | Auth design, migration strategy, production deployment |
+
+The rationale must be stated explicitly — not just the label. Example:
+
+```
+Confidence: Medium
+Reason: Authentication flow matches common Next.js patterns, but session
+expiration policy was not specified by the user — logged as assumption A-003.
+```
 
 ## Human Review Handoff Package
 

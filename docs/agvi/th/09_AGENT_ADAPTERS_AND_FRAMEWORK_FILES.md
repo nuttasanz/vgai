@@ -44,11 +44,20 @@ workflow แบบ solo-first อาจมี:
 ```text
 .vgai/
   core/
-    core-rules.md
-    verification-policy.md
-    repair-policy.md
-    stop-conditions.md
-    risk-classification.md
+    trust-kernel/
+      common/           ← TK-001..TK-018 universal governance rules
+      typescript/       ← extends common/ + TS-specific rules
+      python/           ← extends common/ + Python-specific rules
+
+  hooks/
+    hooks.json          ← event → script mapping
+    scripts/
+      pre-tool-use.js   ← ตรวจ acceptance criteria, ป้องกัน scope drift
+      post-tool-use.js  ← นับ repair iterations, append observation
+      stop.js           ← flush observations, trigger Reflector
+      session-start.js  ← โหลด trust-kernel layer
+
+  observations.jsonl    ← append-only event log (universal data source)
 
   workflows/
     01-project-initiation.md
@@ -88,6 +97,41 @@ CLAUDE.md
 ```
 
 framework files บอก external coding agent ว่าควรประพฤติอย่างไร agent ยังทำ implementation แต่ framework ควบคุม process
+
+## Hook-Based Enforcement Layer
+
+ไฟล์อย่าง `AGENTS.md` และ `CLAUDE.md` บอก agent ว่าต้องทำอะไร แต่ขึ้นอยู่กับ agent ว่าจะอ่านและปฏิบัติตามหรือไม่ hooks บังคับกฎ framework แบบ mechanical ไม่ว่า agent จะมีไฟล์นั้นใน context window หรือไม่
+
+hook fire ที่ lifecycle event เฉพาะและรัน script script สามารถ block operation, append observation หรือ trigger follow-up action ได้
+
+framework กำหนด 4 enforcement hooks:
+
+| Hook event | การบังคับ |
+| --- | --- |
+| **PreToolUse** (Edit / Write) | block code modification ถ้ายังไม่มี acceptance criteria สำหรับ task ปัจจุบัน (TK-001) |
+| **PostToolUse** (Edit / Write) | นับ repair iterations; block ถ้า counter เกิน 3 (TK-008) |
+| **Stop** | append session summary ลง `observations.jsonl`; trigger Reflector ถ้า task ไม่ trivial |
+| **SessionStart** | โหลด `trust-kernel/common/` และ language layer ที่ตรวจพบเข้า active context |
+
+### observations.jsonl
+
+ทุก PreToolUse, PostToolUse และ Stop event append 1 บรรทัดลง `.vgai/observations.jsonl` แต่ละ entry บันทึก:
+
+```json
+{
+  "timestamp": "2026-05-18T14:23:01Z",
+  "event": "PostToolUse",
+  "tool": "Edit",
+  "file": "src/lib/auth.ts",
+  "outcome": "success",
+  "task_id": "task-042",
+  "repair_iteration": 2
+}
+```
+
+event log นี้คือ **universal data source** ของทุก framework artifact — Failure Mode Reports, Trust/Risk Reports, Engineering Reflection Reports และ Project Decision Log ถูกสร้างจาก evidence ใน `observations.jsonl` ไม่ใช่จาก working memory ของ agent
+
+hooks ไม่ได้แทนที่ instruction files `CLAUDE.md` และ `AGENTS.md` ส่ง intent และ context ให้ agent hooks บังคับ hard limits ที่ agent ไม่สามารถ bypass ผ่าน reasoning ได้
 
 ## Agent Compatibility Layer
 

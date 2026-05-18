@@ -34,6 +34,81 @@ defines planning, verification, repair, stop behavior, and learning outputs.
 
 ---
 
+## Workflow Tiers
+
+Not every task requires all 27 steps. The framework routes to a **workflow
+tier** based on the task's risk classification. Risk classification follows the
+rubric in
+[doc 05 — Risk-Based Approval](05_VERIFICATION_AND_RISK.md#risk-based-approval).
+
+| Tier | Risk level | Approximate steps | Key omissions vs Tier 2 |
+| --- | --- | --- | --- |
+| **Tier 0** | Low | 6 | Gate 1, Gate 3, Repair Loop, Reflection, Skill Map, Mentor Mode |
+| **Tier 1** | Medium | 12 | Gate 3, Skill Map, Mentor Mode |
+| **Tier 2** | High or learning mode | 27 | None — full workflow |
+
+### Tier 0: Minimal (Low-risk tasks)
+
+**Applies when:** ≤2 files changed, no auth/authz, no data deletion, ≤50
+lines, no new dependencies, no schema changes. Every condition must hold — if
+any one fails, escalate to Tier 1.
+
+Steps:
+
+1. Classify risk as Low (automatic check against rubric)
+2. Generate acceptance criteria (2–4 criteria maximum)
+3. Create lightweight snapshot (git stash or branch)
+4. Implement via coding agent
+5. Run checks: build, typecheck, lint, and tests where available
+6. If checks fail: one repair attempt only, then stop and generate a short
+   Failure Note — do not enter the full Build-and-Repair Loop
+7. Trust/Risk Report (one paragraph minimum)
+
+Governance: Level 1 for checks; Level 2 for acceptance criteria. Multi-role
+review is not required.
+
+### Tier 1: Standard (Medium-risk tasks)
+
+**Applies when:** 3–10 files, OR new dependency, OR touches existing schema, OR
+test gap, OR significant business logic. A single Medium criterion is enough to
+require this tier.
+
+Steps:
+
+1. Requirement analysis and missing information check
+2. Acceptance criteria generation
+3. Architecture and impact analysis
+4. Verification Gate 1
+5. Risk classification confirmed as Medium
+6. Snapshot or branch
+7. Implement via coding agent
+8. Diff preview
+9. Build-and-Repair Loop (maximum 3 iterations)
+10. Verification Gate 2
+11. Trust/Risk Report
+12. Engineering Reflection Report (optional — user may request)
+
+Governance: Level 1 for evidence; Level 2 for summaries; Level 3 only if the
+task touches rules, architecture, or security decisions.
+
+Verification Gate 3 (production readiness) applies only if the task modifies
+deployment configuration, environment variables, Dockerfile, or infrastructure
+files. If Gate 3 does not apply, note its omission in the Trust/Risk Report.
+
+### Tier 2: Full (High-risk tasks or learning mode)
+
+**Applies when:** any single High-risk criterion is true — auth/authz,
+deletion, migration, secret handling, payment, schema change, external API with
+side effects, or production config. Also applies when the user activates
+learning mode regardless of risk level.
+
+All 27 steps apply. See [Core Workflow](#core-workflow) below.
+
+At Tier 2, multi-role AI review (Level 3 governance) is required for all
+decisions — no single-AI judgment is allowed for High-risk tasks.
+
+---
+
 ## Existing project and development task workflow
 
 The following is the **continuous loop for an existing repository or a scoped

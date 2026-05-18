@@ -58,6 +58,7 @@ safe claim หลักคือ:
 | [12 Chief Comparison](docs/agvi/th/12_CHIEF_COMPARISON.md) | ความสัมพันธ์กับ Chief และ sequence diagram ของ compatibility mode |
 | [13 Examples & Scenarios](docs/agvi/th/13_EXAMPLES_AND_SCENARIOS.md) | walkthrough scenarios และ expected outputs |
 | [Glossary](docs/agvi/th/14_GLOSSARY.md) | definitions และ cross-links |
+| [15 Concrete Examples](docs/agvi/th/15_CONCRETE_EXAMPLES.md) | Trust Kernel v0.1 (18 กฎ), AGENTS.md และ CLAUDE.md ไฟล์อ้างอิง |
 
 ---
 

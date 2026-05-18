@@ -12,6 +12,65 @@ AI coding agents ที่มีอยู่แล้วเป็น **เคร
 
 ---
 
+## ระดับเวิร์กโฟลว์ (Workflow Tiers)
+
+ไม่ใช่ทุก task ต้องผ่านทุก 27 ขั้นตอน framework เลือก **workflow tier** จาก risk classification ของ task ตาม rubric ใน [doc 05 — Risk-Based Approval](05_VERIFICATION_AND_RISK.md#risk-based-approval)
+
+| Tier | Risk level | ขั้นตอนโดยประมาณ | สิ่งที่ข้ามเทียบกับ Tier 2 |
+| --- | --- | --- | --- |
+| **Tier 0** | Low | 6 | Gate 1, Gate 3, Repair Loop, Reflection, Skill Map, Mentor Mode |
+| **Tier 1** | Medium | 12 | Gate 3, Skill Map, Mentor Mode |
+| **Tier 2** | High หรือ learning mode | 27 | ไม่ข้าม — full workflow |
+
+### Tier 0: Minimal (Low-risk tasks)
+
+**ใช้เมื่อ:** ≤2 files, ไม่แตะ auth/authz, ไม่ลบข้อมูล, ≤50 lines, ไม่เพิ่ม dependencies, ไม่เปลี่ยน schema ทุกเงื่อนไขต้องเป็นจริง — ถ้าเงื่อนไขใดล้มเหลวให้ escalate เป็น Tier 1
+
+ขั้นตอน:
+
+1. จัดระดับความเสี่ยงเป็น Low (ตรวจ rubric อัตโนมัติ)
+2. สร้าง acceptance criteria (สูงสุด 2–4 ข้อ)
+3. สร้าง lightweight snapshot (git stash หรือ branch)
+4. implement ผ่าน coding agent
+5. รัน checks: build, typecheck, lint และ tests ที่มี
+6. ถ้า checks fail: repair ได้ 1 ครั้งเท่านั้น แล้วหยุดและสร้าง Failure Note สั้น — ไม่เข้า Build-and-Repair Loop เต็ม
+7. Trust/Risk Report (อย่างน้อย 1 ย่อหน้า)
+
+Governance: Level 1 สำหรับ checks, Level 2 สำหรับ acceptance criteria ไม่ต้อง multi-role review
+
+### Tier 1: Standard (Medium-risk tasks)
+
+**ใช้เมื่อ:** 3–10 files, หรือ dependency ใหม่, หรือแตะ schema เดิม, หรือ test gap, หรือ business logic สำคัญ — เงื่อนไขข้อใดข้อหนึ่งพอสำหรับ tier นี้
+
+ขั้นตอน:
+
+1. วิเคราะห์ requirement และตรวจ missing information
+2. สร้าง acceptance criteria
+3. วิเคราะห์ architecture และ impact
+4. Verification Gate 1
+5. ยืนยัน risk classification เป็น Medium
+6. สร้าง snapshot หรือ branch
+7. implement ผ่าน coding agent
+8. Diff preview
+9. Build-and-Repair Loop (สูงสุด 3 iterations)
+10. Verification Gate 2
+11. Trust/Risk Report
+12. Engineering Reflection Report (optional — user ขอได้)
+
+Governance: Level 1 สำหรับ evidence, Level 2 สำหรับ summaries, Level 3 เฉพาะถ้าแตะ rules, architecture หรือ security decisions
+
+Verification Gate 3 ใช้เฉพาะถ้า task แก้ deployment config, environment variables, Dockerfile หรือ infrastructure files ถ้าไม่ใช้ Gate 3 ให้ระบุใน Trust/Risk Report
+
+### Tier 2: Full (High-risk tasks หรือ learning mode)
+
+**ใช้เมื่อ:** เงื่อนไข High-risk ข้อใดข้อหนึ่งเป็นจริง — auth/authz, ลบข้อมูล, migration, จัดการ secrets, payment, เปลี่ยน schema, external API ที่มี side effects หรือ production config นอกจากนี้ใช้เมื่อ user เปิด learning mode โดยไม่คำนึงถึง risk level
+
+ทุก 27 ขั้นตอนใช้ ดู [Core workflow](#core-workflow) ด้านล่าง
+
+ที่ Tier 2 ต้องใช้ multi-role AI review (Level 3 governance) สำหรับทุก decision — ห้ามใช้ single-AI judgment สำหรับ High-risk tasks
+
+---
+
 ## เวิร์กโฟลว์สำหรับโปรเจกต์เดิมและงานพัฒนา
 
 ส่วนนี้คือ **continuous loop สำหรับ repository เดิมหรืองานพัฒนาเฉพาะขอบเขต** ซึ่งแยกจาก [การเริ่มโปรเจกต์ใหม่ที่ AI จัดการ](#ai-managed-new-project-initialization-workflow)

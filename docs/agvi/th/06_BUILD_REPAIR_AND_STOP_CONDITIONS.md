@@ -23,20 +23,52 @@ Build-and-Repair Loop คือกลไกที่รัน checks วิเ�
 5. สร้าง repair plan ที่ scoped และอ้าง evidence
 6. ตรวจ risk level ของ repair
 7. ขอ approval ถ้า risk เป็น medium/high หรือแตะพื้นที่ sensitive
-8. apply repair ภายใน repair budget
+8. apply repair ภายใน repair budget — **สูงสุด 3 iterations ต่อ task**
 9. รัน checks ซ้ำ
 10. หยุดเมื่อ pass, budget หมด, risk สูงขึ้น, uncertainty สูงเกิน หรือ human review จำเป็น
 
-Stop conditions สำคัญ:
+### Repair Budget
 
-- required checks ผ่านแล้ว
-- findings ที่เหลือ low severity หรือ informational
-- issue ที่เหลืออยู่นอก scope ของ task
-- repair budget หมด
-- repair เริ่มแตะ files/areas ที่ไม่อยู่ใน approved plan
-- error เปลี่ยนไปเป็น security/data/schema/production concern
-- AI ไม่สามารถอธิบาย root cause พร้อม evidence ได้
-- การแก้เพิ่มมีโอกาสสร้าง regression มากกว่าประโยชน์
+**Budget = 3 iterations สูงสุด** นับจากครั้งแรกที่ gate fail หากยังไม่ผ่านหลัง 3 ครั้ง ต้องหยุดและ escalate ทันที ห้าม repair เพิ่มโดยไม่มี user approval เปิด budget ใหม่
+
+Budget จะ reset ก็ต่อเมื่อ user approve scope ใหม่หรืองานใหม่อย่างชัดเจน
+
+### Stop Conditions
+
+| เงื่อนไขที่ trigger stop | เหตุผล |
+| --- | --- |
+| ไม่มี Critical หรือ High severity findings เหลือ | งานเสร็จเพียงพอสำหรับ scope ที่อนุมัติ |
+| Repair budget ครบ 3 iterations แล้ว | ป้องกัน uncontrolled repair loop |
+| Repair เริ่มแตะไฟล์นอก approved plan | scope drift — ต้อง user approval ก่อน |
+| Error เปลี่ยนเป็น security/data/schema concern | risk ระดับ High → ต้อง human review |
+| AI อธิบาย root cause พร้อม evidence ไม่ได้ | ไม่มีข้อมูลเพียงพอจะ repair อย่างปลอดภัย |
+| Issue ที่เหลืออยู่นอก scope ของ task | แก้ถูก task ผิด → log เป็น future task |
+| การแก้เพิ่มเสี่ยง regression มากกว่าประโยชน์ | cost/benefit ไม่คุ้ม |
+
+เมื่อ stop ระบบต้องรายงาน stop decision พร้อม evidence เช่น:
+
+```
+Decision: Stop Automated Repair
+Reason:
+- Build, typecheck และ tests ผ่านแล้ว
+- ไม่มี Critical หรือ High findings เหลือ
+- Remaining: 2 Medium findings (unused variable, minor type widening)
+Recommendation:
+- ไม่ต้อง continue AI repair
+- Medium findings สามารถ address ได้ใน task ถัดไปถ้าต้องการ
+```
+
+### Finding Severity Levels (สำหรับ Build-and-Repair)
+
+| ระดับ | การตัดสินใจ Repair |
+| --- | --- |
+| Critical | ต้อง repair หรือ escalate ก่อน gate pass — ห้าม stop จนกว่าจะ resolve |
+| High | ควร repair หรือ escalate ก่อนรายงาน complete |
+| Medium | Repair ได้ถ้าอยู่ใน scope และ user approve |
+| Low | Log ไว้ ไม่ repair อัตโนมัติ |
+| Informational | รายงานเท่านั้น |
+
+คำจำกัดความเต็มของแต่ละระดับดู [doc 05 — Finding Severity Levels](05_VERIFICATION_AND_RISK.md#finding-severity-levels)
 
 ระบบควรระวังไม่ให้ AI “polish” code ต่อหลัง evidence เพียงพอแล้ว และไม่ควรเปลี่ยน requirement หรือ scope เงียบ ๆ ระหว่าง repair
 
@@ -51,7 +83,15 @@ Stop conditions สำคัญ:
 - **Cached summaries** — reuse summaries ของไฟล์หรือ subsystems ที่ไม่เปลี่ยน
 - **Diff-based repair context** — สำหรับ repair ให้ส่ง diff, failing logs และ affected files แทนทั้ง repo
 - **Error-log compression** — สรุป logs ให้เหลือ root errors, stack traces สำคัญ และ commands
-- **Model routing** — ใช้ model เบากับ summary/log tasks และ model แข็งกับ risk/judgment tasks เมื่อมี
+- **Model routing** — map model tier กับ governance level และ risk อย่างชัดเจน:
+
+  | Model tier | ใช้สำหรับ |
+  | --- | --- |
+  | **Small / cheap** (เช่น Haiku) | Observation logging, log compression, summary formatting, pattern detection จาก `observations.jsonl`, cost tracking |
+  | **Mid-tier** (เช่น Sonnet) | Planner, Verifier, Rule Workshop generation call, acceptance criteria, Gate 2 review |
+  | **Large** (เช่น Opus) | High-risk Arbiter, Level 3 critique-independence calls, stop-condition decisions สำหรับ High-risk tasks, Rule Workshop critique call เมื่อ Level 3 กำหนด |
+
+  Governance level map กับ model tier: Level 1 = deterministic tools เท่านั้น; Level 2 = small/mid-tier; Level 3 Low/Medium = mid-tier; Level 3 High = large model สำหรับ arbitration และ critique
 - **Repair/token budgets** — จำกัดจำนวน iterations, tokens และ cost ต่อ task
 
 Optimization ต้องไม่ลด evidence ที่จำเป็น เช่น ไม่ควรข้าม build/test เพียงเพื่อประหยัด tokens และต้องบันทึกว่า context ใดถูกเลือกหรือไม่ได้เลือก

@@ -19,6 +19,7 @@ part_of: VG-AI product vision (modular)
 - [12 Chief](12_CHIEF_COMPARISON.md)
 - [13 ตัวอย่าง](13_EXAMPLES_AND_SCENARIOS.md)
 - [อภิธานศัพท์](14_GLOSSARY.md)
+- [15 ตัวอย่าง Concrete](15_CONCRETE_EXAMPLES.md)
 
 # วิสัยทัศน์ผลิตภัณฑ์ (ภาพรวม)
 
@@ -46,6 +47,7 @@ part_of: VG-AI product vision (modular)
 | [12 Chief Comparison](12_CHIEF_COMPARISON.md) | ความสัมพันธ์กับ Chief และ sequence diagram ของ Chief compatibility mode |
 | [13 Examples & Scenarios](13_EXAMPLES_AND_SCENARIOS.md) | walkthrough แบบ Chief-style และ AI-managed สำหรับระบบจองคลินิก ผลลัพธ์ที่คาดหวัง และ use case |
 | [14 Glossary](14_GLOSSARY.md) | คำจำกัดความและ cross-links |
+| [15 Concrete Examples](15_CONCRETE_EXAMPLES.md) | Trust Kernel v0.1 (18 กฎ), AGENTS.md และ CLAUDE.md ไฟล์อ้างอิงพร้อมคำอธิบาย |
 
 ## ตำแหน่งผลิตภัณฑ์ในหนึ่งประโยค
 

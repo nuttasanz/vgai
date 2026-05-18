@@ -103,37 +103,62 @@ The framework should use **risk-based multi-role governance**:
   security-sensitive changes, risk classification, repair strategy,
   stop-condition decisions, and final trust/risk reporting.
 
-Possible AI roles include:
+### Governance Level Selection
 
-- **Product / Requirement Planner** — clarifies product goals, users, workflows,
-  and acceptance criteria.
-- **Tech Stack Recommender** — proposes a suitable stack based on requirements,
-  learning needs, verification capability, and deployment assumptions.
-- **Rule Generator** — creates candidate workflow, project, technical, security,
-  testing, and learning rules.
-- **Rule Critic** — challenges over-broad, unsupported, contradictory, or risky
-  rules.
-- **Security and Risk Reviewer** — focuses on authentication, authorization,
-  sensitive data, deletion, secrets, migrations, and production-sensitive
-  decisions.
-- **Rule Scenario Designer** — creates examples of when a rule should trigger
-  and when it should not.
-- **Rule Arbiter** — classifies rules as active, warning, guided-question,
-  human-review-trigger, rejected, or experimental.
-- **Implementation Planner** — translates accepted rules and requirements into
-  task plans.
-- **Builder / Coding Agent** — implements approved changes through Claude Code,
-  Codex, Cursor-like agents, or future coding agents.
-- **Verifier** — evaluates build/test evidence, verification gates, and
-  acceptance criteria.
-- **Repair Agent** — proposes and applies controlled repairs when checks fail.
-- **Stop-Condition Reviewer** — decides whether further AI modification is
-  justified by evidence.
-- **Reflection and Learning Agent** — produces engineering reflection, skill
-  progression, and learning-path artifacts.
+| Task risk level | Required governance level |
+| --- | --- |
+| Low | Level 1 for evidence collection; Level 2 for summary and reporting |
+| Medium | Level 1 for evidence; Level 2 for summary; Level 3 if touching rules, architecture, or security decisions |
+| High | Level 1 for evidence; Level 3 required for all decisions — no single-AI judgment allowed |
+| Rule/framework changes | Level 3 always — regardless of file count |
 
-This multi-role model may be implemented in different ways: a single strong
-model prompted through separate roles, separate calls to the same model with
-isolated contexts, multiple cloud models, local LLMs for low-risk summarization
-and log compression, deterministic scripts for evidence, or an MCP/CLI
-orchestrator that coordinates these components.
+Risk classification rubric: [doc 05 — Risk-Based Approval](05_VERIFICATION_AND_RISK.md#risk-based-approval)
+
+### What "AI Role" Means
+
+An **AI role** is a prompt template — a set of instructions that tells an LLM
+to reason from a specific perspective and produce a specific type of output. A
+role is not a separate AI service, separate API endpoint, or separate model
+deployment. Two or more roles may share a single LLM call through a
+multi-section prompt, where each section asks the model to reason from a
+different viewpoint before producing a combined output.
+
+The number of LLM calls is determined by the governance level, not by the
+number of named roles. At Level 3, a single prompt may ask the model to first
+generate a proposal, then critique it from a security perspective, then classify
+the result — all within one call.
+
+### Consolidated AI Role Groups
+
+The framework defines **five role groups**. Within a group, sub-roles may be
+combined into a single multi-section prompt or split into sequential calls when
+role isolation requires independent context.
+
+| Role group | Sub-roles included | Responsibility |
+| --- | --- | --- |
+| **Planner** | Product / Requirement Planner, Tech Stack Recommender, Implementation Planner | Clarify goals, select technology stack, and produce task plans before implementation begins |
+| **Rule Workshop** | Rule Generator, Rule Critic, Security and Risk Reviewer, Rule Scenario Designer, Rule Arbiter | Generate candidate rules, critique them, add security perspective, create trigger scenarios, and classify each rule |
+| **Builder** | Builder / Coding Agent | Implement approved changes through the existing coding agent (Claude Code, Codex, Cursor, or similar) |
+| **Verifier** | Verifier, Repair Agent, Stop-Condition Reviewer | Evaluate verification gates, propose controlled repairs, and decide when to stop |
+| **Reflector** | Reflection and Learning Agent | Produce engineering reflection, skill progression, and learning-path artifacts |
+
+When governance Level 3 is required, the Rule Workshop may be split into two
+sequential calls to preserve independence:
+
+- **Generation call**: Rule Generator + Rule Arbiter — propose and classify rules
+- **Critique call**: Rule Critic + Security and Risk Reviewer + Rule Scenario
+  Designer — challenge, test, and validate rules from a separate context
+
+The Builder role is always invoked as a separate call because it interacts with
+an external coding agent tool rather than performing internal reasoning.
+
+When critique must be independent (Level 3), the critique prompt should not
+receive the full reasoning trace of the generation prompt in its context. The
+goal is to detect flawed assumptions, not to validate a chain of reasoning the
+model already agreed with.
+
+This model may be implemented in different ways: a single model prompted through
+separate role sections, sequential calls with isolated contexts, multiple cloud
+models, local LLMs for low-risk summarization, deterministic scripts for
+evidence collection, or an MCP/CLI orchestrator that coordinates these
+components.

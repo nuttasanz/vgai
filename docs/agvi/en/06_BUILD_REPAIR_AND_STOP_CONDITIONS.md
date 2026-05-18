@@ -65,10 +65,11 @@ Example checks may include:
 - build check
 - dependency audit where appropriate
 
-The system should not allow unlimited repair attempts. A safe prototype may
-limit repair attempts to a small number, such as two or three iterations per
-task. This prevents the agent from repeatedly changing the project in
-uncontrolled ways.
+The system must not allow unlimited repair attempts. The repair budget is
+**maximum 3 iterations per task**. If verification gates still fail after 3
+attempts, the agent must stop and escalate — it must not continue repairing
+without user approval of a new budget. The budget resets only when the user
+explicitly approves new scope or a new task.
 
 The loop must also define explicit Stop Conditions to prevent over-repair. The
 agent should not continue modifying code only because it can still suggest
@@ -76,40 +77,42 @@ improvements. Further repair should require evidence, such as a failed build,
 failed typecheck, failed test, unmet requirement, high-risk security finding, or
 unresolved verification gate failure.
 
-Possible Stop Conditions include:
+### Stop Conditions
 
-- build passes
-- typecheck passes
-- lint has no blocking errors
-- tests pass where available
-- required task acceptance criteria are satisfied
-- no Critical or High severity findings remain
-- remaining findings are Low, Informational, or optional refactoring suggestions
-- the maximum repair attempt limit has been reached
-- further repair may introduce regression or exceed the approved task scope
+| Condition | Reason to stop |
+| --- | --- |
+| No Critical or High severity findings remain | Task is complete within approved scope |
+| Repair budget of 3 iterations exhausted | Prevents uncontrolled repair loop |
+| Repair starts touching files outside the approved plan | Scope drift — requires user approval |
+| Error becomes a security/data/schema/production concern | Risk has escalated to High — human review required |
+| AI cannot explain root cause with evidence | Insufficient information to repair safely |
+| Remaining issues are outside the task scope | Log as future task — do not fix now |
+| Further repair risks regression more than it helps | Cost/benefit does not justify continuing |
 
-When Stop Conditions are met, the system should explicitly report a stop
-decision, such as:
+When stop conditions are met, the system must report the decision explicitly:
 
 ```text
 Decision: Stop Automated Repair
 Reason:
 - Build, typecheck, and tests passed
-- No Critical or High severity issues remain
-- Remaining findings are optional maintainability suggestions
+- No Critical or High severity findings remain
+- Remaining: 2 Medium findings (unused variable, minor type widening)
 Recommendation:
 - Do not continue AI-driven modification automatically
-- Human review may be requested only for optional improvement or final approval
+- Medium findings may be addressed in a follow-up task if desired
 ```
 
-The system should also classify review findings by severity before deciding
-whether to repair:
+### Finding Severity Levels (for Build-and-Repair decisions)
 
-- Critical: must be repaired or escalated before passing the gate
-- High: should be repaired or escalated before passing the gate
-- Medium: may be repaired with user approval if within scope
-- Low: should be reported but not automatically repaired
-- Informational: should be reported only
+| Level | Repair decision |
+| --- | --- |
+| Critical | Must repair or escalate before gate passes — do not stop until resolved |
+| High | Should repair or escalate before reporting complete |
+| Medium | May repair if within scope and user approves |
+| Low | Log only — do not auto-repair |
+| Informational | Report only |
+
+Full definitions with examples: [doc 05 — Finding Severity Levels](05_VERIFICATION_AND_RISK.md#finding-severity-levels)
 
 This evidence-based stopping mechanism is important for less-experienced
 developers because they may repeatedly ask AI to review or improve code without
@@ -200,12 +203,20 @@ The Cost and Token Optimization Layer may include the following strategies:
      the agent.
 
 7. **Model Routing**
-   - Use smaller or cheaper models for simpler tasks such as file
-     classification, summary formatting, or report formatting.
-   - Use stronger models for higher-risk reasoning such as implementation
-     planning, security review, repair planning, and stop-condition decisions.
-   - The goal is not to always use the largest model, but to match model
-     capability to task risk.
+   - Match model capability to task risk and governance level using a concrete
+     mapping:
+
+   | Model tier | Use for |
+   | --- | --- |
+   | **Small / cheap** (e.g., Haiku) | Observation logging, log compression, summary formatting, pattern detection from `observations.jsonl`, session cost tracking |
+   | **Mid-tier** (e.g., Sonnet) | Planner, Verifier, Rule Workshop generation call, acceptance criteria generation, Gate 2 review |
+   | **Large** (e.g., Opus) | High-risk Arbiter, Level 3 critique-independence calls, stop-condition decisions on High-risk tasks, Rule Workshop critique call when Level 3 is required |
+
+   - Governance levels map to model tiers: Level 1 = deterministic tools only;
+     Level 2 = small or mid-tier; Level 3 Low/Medium risk = mid-tier; Level 3
+     High risk = large model for arbitration and critique.
+   - The goal is not to always use the largest model, but to spend large-model
+     tokens only where the governance level and risk justify it.
 
 8. **Repair and Token Budgets**
    - Limit repair attempts per task.

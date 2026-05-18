@@ -95,13 +95,68 @@ Test-aware ไม่ได้หมายความว่าทุก prototyp
 
 ## Risk-Based Approval
 
-ก่อน AI แก้ code ระบบควรจัดระดับความเสี่ยง:
+ก่อน AI แก้ code ระบบต้องจัดระดับความเสี่ยงของงานนั้น การ classification นี้กำหนด approval path และ verification requirements
 
-- **Low** — เปลี่ยนเล็ก scoped ชัด ไม่มี auth/data/schema/production impact
-- **Medium** — แตะหลายไฟล์, behavior สำคัญ, dependency, test gaps หรือ maintainability concerns
-- **High** — authentication, authorization, sensitive data, deletion, migrations, secrets, payment, production config หรือ broad architecture changes
+### Risk Classification Rubric
 
-Low risk อาจ proceed ด้วย user confirmation แบบเบา Medium risk ควรแสดง plan/diff/risk ชัดเจนก่อน approve High risk ต้อง explicit approval และมักต้อง human review trigger
+| ระดับ | เกณฑ์ที่ต้องครบ (ถ้าข้อใดข้อหนึ่งเป็นจริง = ระดับนั้น) |
+| --- | --- |
+| **Low** | ≤2 ไฟล์ที่เปลี่ยน, ไม่แตะ auth/authz, ไม่มี data deletion, ≤50 บรรทัด, ไม่มี dependency ใหม่, ไม่แตะ schema |
+| **Medium** | 3–10 ไฟล์ OR มี dependency ใหม่ OR แตะ schema ที่มีอยู่ OR test gap OR business logic สำคัญ |
+| **High** | auth/authz, deletion, migration, secret handling, payment, schema change, external API ที่มี side effects, production config |
+
+ถ้าเกณฑ์ข้อใดข้อหนึ่งใน High เป็นจริง = High เสมอ ไม่ว่าจะมีกี่ไฟล์
+
+### Approval Requirements
+
+| ระดับ | สิ่งที่ต้องทำก่อนเริ่ม implement |
+| --- | --- |
+| Low | User รับทราบ plan แบบเบา (implicit acknowledgement) |
+| Medium | User ยืนยัน plan + diff preview ก่อน apply (TK-010) |
+| High | User ยืนยัน plan + diff preview + Human Review Handoff Package เมื่อเสร็จ (TK-011) |
+
+## Finding Severity Levels
+
+Gate 2 จัดประเภท findings ก่อนตัดสิน repair หรือ stop
+
+### Pre-Report Confidence Gate
+
+ก่อน flag finding ใดก็ตาม Verifier ต้องตอบ 4 คำถาม:
+
+1. อ้างไฟล์และ line number ที่แน่ชัดได้ไหม?
+2. อธิบาย failure mode ที่เป็นรูปธรรมได้ไหม (input → state → bad outcome)?
+3. อ่าน surrounding context แล้วหรือยัง — callers, imports และ tests?
+4. severity defensible จริงไหมเทียบกับ actual risk ไม่ใช่แค่ pattern ที่เห็น?
+
+ถ้าคำตอบใดไม่ชัด → downgrade severity ลงหนึ่งระดับหรือ drop finding ออกเลย การ review ที่ไม่พบ findings คือผลลัพธ์ที่ valid และคาดหวังได้ findings ที่แต่งขึ้นและ speculative nits ลดความน่าเชื่อถือของ Verifier และสร้าง repair cycles ที่ไม่จำเป็น
+
+| ระดับ | ความหมาย | ตัวอย่าง | การตัดสินใจ |
+| --- | --- | --- | --- |
+| **Critical** | ต้อง repair หรือ escalate ก่อน gate pass | auth bypass, secret leak, data loss, build broken | ห้าม pass gate — ต้อง repair หรือ escalate |
+| **High** | ควร repair หรือ escalate ก่อน gate pass | failing test บน critical path, missing server-side authz | ต้อง repair หรือ escalate ก่อนรายงาน complete |
+| **Medium** | อาจ repair ได้ถ้า user approve และอยู่ใน scope | unused code, minor type widening, missing edge-case error handling | repair ได้ถ้า scope อนุญาต ไม่ block gate |
+| **Low** | รายงานแต่ไม่ repair อัตโนมัติ | formatting, naming style, non-blocking lint warning | log ไว้ ไม่บังคับ repair |
+| **Informational** | รายงานเท่านั้น | dependency version note, suggestion สำหรับ future improvement | ไม่ต้องทำอะไร |
+
+หลัง fix High/Critical findings หมดแล้ว ระบบควร stop แม้ยังมี Medium/Low เหลืออยู่ (ดู TK-009)
+
+## Confidence Levels
+
+ทุก AI output (plan, risk classification, tech stack recommendation, report) ต้องมี confidence label:
+
+| ระดับ | ความหมาย | เมื่อใช้ |
+| --- | --- | --- |
+| **High** | pattern ที่ established ชัดเจน, evidence แน่น, ambiguity ต่ำ | standard CRUD, well-known library usage, clear requirements |
+| **Medium** | approach สมเหตุสมผลแต่มี assumptions อยู่ ผู้ใช้ควรตรวจจุดสำคัญ | บางส่วนของ requirement ยังไม่ชัด, pattern ที่ใหม่สำหรับ codebase นี้ |
+| **Low** | มี uncertainty สูง, ขอแนะนำให้ human review ก่อนดำเนินต่อ | auth design, migration strategy, production deployment decision |
+
+Confidence label ต้องระบุ rationale ด้วย ไม่ใช่แค่ตัวอักษร ตัวอย่าง:
+
+```
+Confidence: Medium
+Reason: Authentication flow matches common Next.js patterns, but session
+expiration policy was not specified by the user — logged as assumption A-003.
+```
 
 ## Human Review Handoff Package
 

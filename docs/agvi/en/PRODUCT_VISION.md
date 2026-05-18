@@ -19,6 +19,7 @@ part_of: VG-AI product vision (modular)
 - [12 Chief](12_CHIEF_COMPARISON.md)
 - [13 Examples](13_EXAMPLES_AND_SCENARIOS.md)
 - [Glossary](14_GLOSSARY.md)
+- [15 Concrete Examples](15_CONCRETE_EXAMPLES.md)
 
 # Product Vision (Overview)
 
@@ -56,6 +57,7 @@ product layers** model) in
 | [12 Chief Comparison](12_CHIEF_COMPARISON.md)                                     | Relationship to Chief, **Chief compatibility mode** sequence diagram                                                                                                                       |
 | [13 Examples & Scenarios](13_EXAMPLES_AND_SCENARIOS.md)                           | Chief-style and AI-managed clinic booking walkthroughs, expected outputs, extended use case                                                                                                |
 | [14 Glossary](14_GLOSSARY.md)                                                     | Definitions and cross-links                                                                                                                                                                |
+| [15 Concrete Examples](15_CONCRETE_EXAMPLES.md)                                   | Trust Kernel v0.1 (18 rules), AGENTS.md, and CLAUDE.md reference files with explanation                                                                                                   |
 
 ## One-line positioning
 

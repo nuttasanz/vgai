@@ -75,11 +75,20 @@ A framework-first product may be distributed as a project-local package such as:
 ```text
 .vgai/
   core/
-    core-rules.md
-    verification-policy.md
-    repair-policy.md
-    stop-conditions.md
-    risk-classification.md
+    trust-kernel/
+      common/           ← TK-001..TK-018 universal governance rules
+      typescript/       ← extends common/ with TS-specific rules
+      python/           ← extends common/ with Python-specific rules
+
+  hooks/
+    hooks.json          ← event → script mapping
+    scripts/
+      pre-tool-use.js   ← acceptance-criteria check, scope guard
+      post-tool-use.js  ← repair counter, observation append
+      stop.js           ← observations flush, Reflector trigger
+      session-start.js  ← trust-kernel loader
+
+  observations.jsonl    ← append-only event log (universal data source)
 
   workflows/
     01-project-initiation.md
@@ -120,6 +129,51 @@ CLAUDE.md
 
 The framework files tell the external coding agent how to behave. The agent
 still performs implementation, but the framework controls the process.
+
+## Hook-Based Enforcement Layer
+
+Instruction files such as `AGENTS.md` and `CLAUDE.md` tell the coding agent
+what to do — but they rely on the agent reading and following them. Hooks
+enforce framework rules mechanically, regardless of whether the agent checks
+the instruction file in its current context window.
+
+A hook fires at a specific lifecycle event and executes a script. The script
+can block an operation, append an observation, or trigger a follow-up action.
+
+The framework defines four enforcement hooks:
+
+| Hook event | Enforcement action |
+| --- | --- |
+| **PreToolUse** (Edit / Write) | Block code modification if no acceptance criteria exist for the current task (TK-001) |
+| **PostToolUse** (Edit / Write) | Increment repair iteration counter; block if counter exceeds 3 (TK-008) |
+| **Stop** | Append session summary to `observations.jsonl`; trigger Reflector if task was non-trivial |
+| **SessionStart** | Load `trust-kernel/common/` and the detected language layer into the agent's active context |
+
+### observations.jsonl
+
+Every PreToolUse, PostToolUse, and Stop event appends one line to
+`.vgai/observations.jsonl`. Each entry records:
+
+```json
+{
+  "timestamp": "2026-05-18T14:23:01Z",
+  "event": "PostToolUse",
+  "tool": "Edit",
+  "file": "src/lib/auth.ts",
+  "outcome": "success",
+  "task_id": "task-042",
+  "repair_iteration": 2
+}
+```
+
+This event log is the **universal data source** for all framework artifacts.
+Failure Mode Reports, Trust/Risk Reports, Engineering Reflection Reports, and
+the Project Decision Log are all generated from evidence in
+`observations.jsonl` rather than from the agent's working memory.
+
+Hooks do not replace instruction files. `CLAUDE.md` and `AGENTS.md` convey
+intent and context to the agent. Hooks enforce hard limits that the agent must
+not be able to bypass through reasoning alone.
 
 ## Agent Compatibility Layer
 

@@ -442,6 +442,49 @@ A complete learning-oriented workflow may look like this:
 This workflow helps users learn not only what changed, but why it changed, what
 risks remain, and what engineering skill they should develop next.
 
+## Automatic Observation and Reflection Triggering
+
+The Engineering Reflection Report should not depend on the user explicitly
+requesting it, and it should not depend on the agent reconstructing what
+happened from working memory. Both approaches introduce gaps and omissions.
+
+Instead, the framework uses a **Stop hook** to trigger reflection automatically
+at the end of every non-trivial task. The hook reads from
+`.vgai/observations.jsonl` — an append-only event log maintained by
+PreToolUse and PostToolUse hooks throughout the session (see
+[doc 09 — Hook-Based Enforcement Layer](09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md#hook-based-enforcement-layer)).
+
+Each entry in `observations.jsonl` records one tool event:
+
+```json
+{
+  "timestamp": "2026-05-18T14:23:01Z",
+  "event": "PostToolUse",
+  "tool": "Edit",
+  "file": "src/lib/auth.ts",
+  "outcome": "success",
+  "task_id": "task-042",
+  "repair_iteration": 2
+}
+```
+
+The Reflector reads this log to answer questions the Engineering Reflection
+Report requires: which files were modified and when, how many repair iterations
+occurred, which checks passed and which failed, and when and why the session
+stopped.
+
+The observation log is also the data source for:
+
+- Trust/Risk Reports (what happened, what passed)
+- Failure Mode Reports (what failed, how many repair attempts)
+- Project Decision Logs (which decisions were made under which conditions)
+- Skill Progression Map updates (which skill areas appeared in this session)
+
+A cheap model may scan `observations.jsonl` to detect patterns and compress
+the session before the Reflector produces the full report, reducing cost
+without losing evidence (see
+[doc 06 — Model Routing](06_BUILD_REPAIR_AND_STOP_CONDITIONS.md#cost-and-token-optimization-layer)).
+
 ## Engineering Learning Sequence Diagram
 
 ```mermaid
