@@ -1,76 +1,73 @@
 # VG-AI
 
-> **เวิร์กโฟลว์วิศวกรรมซอฟต์แวร์แบบ framework-first, AI-managed และ verification-governed
-> ที่ประสานงานและกำกับ AI coding agents ที่มีอยู่แล้ว**
+> ระบบ discipline + การเรียนรู้ที่วางทับ AI coding agent (Claude Code, Codex,
+> Cursor) เพื่อช่วย junior–mid dev ship code คุณภาพ production **พร้อม** พัฒนา
+> engineering judgment ไปด้วยทุก task
 
----
+VG-AI **ไม่ใช่** AI ใหม่ ไม่ใช่ runtime ใหม่ ไม่ใช่ platform แต่เป็นชุดกฎ + hook
++ slash commands เล็ก ๆ ที่บังคับให้ agent ที่มีอยู่แล้ว:
 
-## VG-AI คืออะไร
+1. ถามก่อน implement — list Acceptance Criteria + risk
+2. ขอ approve ทีละ layer
+3. อธิบายแต่ละ decision ระหว่างทำ
+4. บันทึก decision เข้า `DECISION_LOG.md`
+5. สรุปบทเรียนตอนจบพร้อม risk coverage check 4 ข้อ
 
-VG-AI เป็น workflow framework แบบพกพาได้ที่ประสานงานและกำกับ AI coding agents ที่มีอยู่แล้ว เช่น Claude Code, Codex หรือเครื่องมือระดับ Cursor ผ่านกฎ เวิร์กโฟลว์ สกิล เทมเพลต สคริปต์ verification gates และ learning artifacts
+ผลลัพธ์: ทุก task = code ใช้งานได้ + ผู้ใช้เข้าใจว่าทำไม Senior ถึงคิดแบบนั้น
 
-framework ช่วยให้ผู้พัฒนาที่มีประสบการณ์น้อยลดการเชื่อ AI-assisted development แบบตาบอดผ่าน:
+> Source of truth ของ vision อยู่ที่
+> [`docs/agvi/th/00_WHAT_IS_VGAI.md`](docs/agvi/th/00_WHAT_IS_VGAI.md)
+> อ่านเอกสารนั้นก่อนสำหรับ context เต็ม
 
-- การวิจารณ์หลายบทบาทและการรีวิวกฎที่ AI สร้าง
-- deterministic evidence และ verification gates
-- การซ่อมแซมที่ควบคุมได้และ stop conditions
-- confidence labels และ audit trails
-- rollback support และ diff preview
-- โครงสร้างช่วยฝึก engineering judgment
-- การ escalate ให้มนุษย์รีวิว
+## สถานะ
 
-safe claim หลักคือ:
+| Phase | สถานะ | สิ่งที่มี |
+| --- | --- | --- |
+| **P0 — Discipline Layer** | done | กฎ R1-R16, hook, slash commands, decision log |
+| **P1 — Chassis** | pending | Next.js + TS + Tailwind + env validation |
+| **P2 — Data Layer** | pending | PostgreSQL + Drizzle + migrations |
+| **P3 — Security Layer** | pending | NextAuth + protected routes + authz |
+| **P4 — API Layer** | pending | Zod + error format + example endpoint + tests |
+| **P5 — Ship Layer** | pending | Dockerfile + docker-compose + deploy guide |
 
-> วิสัยทัศน์ผลิตภัณฑ์นี้เสนอเวิร์กโฟลว์วิศวกรรมซอฟต์แวร์แบบ framework-first, AI-managed และ verification-governed ที่ประสานงานและกำกับ AI coding agents ที่มีอยู่แล้ว ช่วยให้ผู้พัฒนาที่มีประสบการณ์น้อยลดการเชื่อ AI-assisted development แบบตาบอดผ่าน multi-role critique, AI-generated rule review, deterministic evidence, verification gates, controlled repair, stop conditions, confidence labels, audit trails, rollback support, engineering judgment scaffolding และ human review escalation
+Discipline Layer ใน `template/` ใช้งานได้แล้ว apply กับ project ใด ๆ ก็ได้
+ไม่ว่าจะเลือก stack ไหน
 
----
-
-## VG-AI ไม่ใช่อะไร
-
-- ไม่ใช่ RAG chatbot
-- ไม่ใช่ checklist app
-- ไม่ใช่ prompt engineering demo
-- ไม่ใช่ AI coding agent ตัวใหม่ที่สร้างจากศูนย์
-- ไม่ใช่สิ่งทดแทน Claude Code, Codex, Cursor หรือ agent อื่นที่มีอยู่แล้ว
-- ไม่ใช่สิ่งทดแทน senior engineers หรือ security engineers
-- ไม่ใช่การรับประกันว่า software ที่ AI สร้างจะปลอดภัยหรือพร้อม production
-
----
-
-## เอกสาร
-
-เริ่มจากภาพรวม product vision แล้วอ่านเอกสารหลักด้านล่าง
-
-| เอกสาร | คำอธิบาย |
-| --- | --- |
-| [Product Vision](docs/agvi/th/PRODUCT_VISION.md) | ภาพรวม สิบเอ็ดชั้นผลิตภัณฑ์หลัก และ navigation index |
-| [01 Product Principles](docs/agvi/th/01_PRODUCT_PRINCIPLES.md) | scope, research concept, layers, problem, users และ safe claims |
-| [02 AI-Managed Workflow](docs/agvi/th/02_AI_MANAGED_WORKFLOW.md) | workflow สำหรับโปรเจกต์เดิมเทียบกับการเริ่มโปรเจกต์ใหม่ |
-| [03 Orchestration & Governance](docs/agvi/th/03_AI_ORCHESTRATION_AND_MULTI_ROLE_GOVERNANCE.md) | multi-role governance, AI roles และ operating model |
-| [04 Tech Stack & Rules](docs/agvi/th/04_TECH_STACK_AND_RULE_GENERATION.md) | tech stack decision, rule generation lifecycle และ rule registry |
-| [05 Verification & Risk](docs/agvi/th/05_VERIFICATION_AND_RISK.md) | verification gates, risk-based approval และ human review handoff |
-| [06 Build, Repair & Stop](docs/agvi/th/06_BUILD_REPAIR_AND_STOP_CONDITIONS.md) | build-and-repair loop, stop conditions และ failure mode report |
-| [07 Engineering Judgment](docs/agvi/th/07_ENGINEERING_THINKING_AND_JUDGMENT.md) | critical thinking, judgment dimensions และ AI skepticism |
-| [08 Learning & Skills](docs/agvi/th/08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md) | reflection reports, skill progression และ mentor mode |
-| [09 Adapters & Framework Files](docs/agvi/th/09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md) | agent compatibility, trust kernel และ project rule layers |
-| [10 Productization & Platform](docs/agvi/th/10_PRODUCTIZATION_AND_PLATFORM.md) | CLI, Git/PR, web dashboard และ roadmap |
-| [11 Research](docs/agvi/th/11_RESEARCH_POSITIONING.md) | research contributions, questions และ evaluation metrics |
-| [12 Chief Comparison](docs/agvi/th/12_CHIEF_COMPARISON.md) | ความสัมพันธ์กับ Chief และ sequence diagram ของ compatibility mode |
-| [13 Examples & Scenarios](docs/agvi/th/13_EXAMPLES_AND_SCENARIOS.md) | walkthrough scenarios และ expected outputs |
-| [Glossary](docs/agvi/th/14_GLOSSARY.md) | definitions และ cross-links |
-| [15 Concrete Examples](docs/agvi/th/15_CONCRETE_EXAMPLES.md) | Trust Kernel v0.1 (18 กฎ), AGENTS.md และ CLAUDE.md ไฟล์อ้างอิง |
-
----
-
-## CLI Quick Start
+## วิธีใช้ template
 
 ```bash
-vgai init        # ติดตั้ง trust kernel, role contracts, workflow templates และ scripts
-vgai discover    # สร้าง product/project profile และ codebase map
-vgai plan        # สร้าง acceptance criteria, assumption log และ implementation plan
-vgai run         # รัน task workflow ผ่าน coding agent ที่มีอยู่แล้ว
-vgai verify      # รัน verification gates และสรุป evidence
-vgai report      # สร้าง trust/risk, reflection และ handoff artifacts
+git clone <this-repo> my-project
+cd my-project/template
+# อ่าน CLAUDE.md ก่อน แล้วใน Claude Code session:
+#   /start-task <สิ่งที่อยากให้ทำ>
 ```
 
-> Agent slash-command alias: รองรับ `/vgai-init` เป็น alias ทางเลือกสำหรับใช้ใน agent command UIs
+สิ่งที่ template บังคับ:
+
+- ต้องมี Acceptance Criteria **ก่อน** ทุก `Edit`/`Write` (hook block)
+- Classify risk (Low/Medium/High) ก่อน implement
+- Reuse check (grep) ก่อนสร้าง code ใหม่
+- List risk ก่อนสร้าง API endpoint ใหม่
+- Log entry สำหรับทุก Medium/High decision
+- Reflection report ตอนจบพร้อม risk coverage check 4 ข้อ
+
+ดู [`template/README.md`](template/README.md) สำหรับรายละเอียดไฟล์ทั้งหมด
+
+## โครงสร้าง repo
+
+| Path | คืออะไร |
+| --- | --- |
+| `template/` | P0 Discipline Layer พร้อม drop เข้า project ใหม่ |
+| `docs/agvi/th/00_WHAT_IS_VGAI.md` | Vision + pitch + decisions (source of truth) |
+| `README.md` / `README_TH.md` | ไฟล์นี้ |
+
+## VG-AI **ไม่ใช่**
+
+- ไม่ใช่ AI coding agent ใหม่
+- ไม่ใช่ runtime / orchestrator ใหม่
+- ไม่ใช่ web platform / dashboard
+- ไม่ใช่ CLI (ยังไม่มี `vgai init` — ใช้ clone template เอาก่อน)
+- ไม่ใช่งานวิจัย (ใช้เองก่อน, thesis เลื่อน)
+
+Vision เก่า (multi-role governance, Trust Kernel v0.1, dashboard ฯลฯ) ดูได้
+จาก git history บน branch `main` commit `d425b77` หรือก่อนหน้า

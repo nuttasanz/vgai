@@ -1,87 +1,78 @@
 # VG-AI
 
-> **A framework-first, AI-managed, verification-governed software engineering
-> workflow that orchestrates and governs existing AI coding agents.**
+> Discipline + learning layer for junior–mid developers using AI coding agents.
+> Turn vague prompts into production output **and** engineering judgment, in one
+> workflow.
 
----
+VG-AI is **not** a new AI agent, runtime, or platform. It is a small set of
+rules, hooks, and slash commands that sit on top of existing agents (Claude
+Code, Codex, Cursor) and force them to:
 
-## What VG-AI is
+1. Ask before implementing — list Acceptance Criteria and risks
+2. Get approval layer-by-layer
+3. Explain decisions while building
+4. Log decisions to `DECISION_LOG.md`
+5. Reflect at task end with risk coverage check
 
-VG-AI is a portable workflow framework that orchestrates and governs existing AI
-coding agents — such as Claude Code, Codex, or Cursor-class tools — through
-rules, workflows, skills, templates, scripts, verification gates, and learning
-artifacts.
+The result: every task ships working code **and** teaches the user how a senior
+engineer would think about it.
 
-The framework helps less-experienced developers reduce blind trust in
-AI-assisted development through:
+> The full vision doc is currently Thai-only.
+> See [`docs/agvi/th/00_WHAT_IS_VGAI.md`](docs/agvi/th/00_WHAT_IS_VGAI.md) for
+> the source of truth.
+> English version of this README is a thin pointer for now —
+> see also [README_TH.md](README_TH.md).
 
-- multi-role critique and AI-generated rule review
-- deterministic evidence and verification gates
-- controlled repair and stop conditions
-- confidence labels and audit trails
-- rollback support and diff preview
-- engineering judgment scaffolding
-- human review escalation
+## Status
 
-The core safe claim is:
+| Phase | Status | Description |
+| --- | --- | --- |
+| **P0 — Discipline Layer** | done | Rules, hooks, slash commands, decision log |
+| **P1 — Chassis** | pending | Next.js + TS + Tailwind + env validation |
+| **P2 — Data Layer** | pending | PostgreSQL + Drizzle + migrations |
+| **P3 — Security Layer** | pending | NextAuth + protected routes + authz |
+| **P4 — API Layer** | pending | Zod + error format + example endpoint + tests |
+| **P5 — Ship Layer** | pending | Dockerfile + docker-compose + deploy guide |
 
-> This product vision proposes a framework-first, AI-managed,
-> verification-governed software engineering workflow that orchestrates and
-> governs existing AI coding agents. It helps less-experienced developers reduce
-> blind trust in AI-assisted development through multi-role critique,
-> AI-generated rule review, deterministic evidence, verification gates,
-> controlled repair, stop conditions, confidence labels, audit trails, rollback
-> support, engineering judgment scaffolding, and human review escalation.
+The discipline layer in `template/` works **today** — you can apply it to any
+project, regardless of the stack you pick.
 
----
-
-## What VG-AI is NOT
-
-- Not a RAG chatbot
-- Not a checklist app
-- Not a prompt engineering demo
-- Not a new AI coding agent built from scratch
-- Not a replacement for Claude Code, Codex, Cursor, or other existing agents
-- Not a replacement for senior engineers or security engineers
-- Not a guarantee that AI-generated software is secure or production-ready
-
----
-
-## Documentation
-
-Start with the product vision overview, then read the key docs below.
-
-| Document                                                                               | Description                                                   |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [Product Vision](docs/agvi/en/PRODUCT_VISION.md)                                               | Overview, eleven major product layers, navigation index       |
-| [01 Product Principles](docs/agvi/en/01_PRODUCT_PRINCIPLES.md)                                 | Scope, research concept, layers, problem, users, safe claims  |
-| [02 AI-Managed Workflow](docs/agvi/en/02_AI_MANAGED_WORKFLOW.md)                               | Existing project workflow vs new project initialization       |
-| [03 Orchestration & Governance](docs/agvi/en/03_AI_ORCHESTRATION_AND_MULTI_ROLE_GOVERNANCE.md) | Multi-role governance, AI roles, operating model              |
-| [04 Tech Stack & Rules](docs/agvi/en/04_TECH_STACK_AND_RULE_GENERATION.md)                     | Tech stack decision, rule generation lifecycle, rule registry |
-| [05 Verification & Risk](docs/agvi/en/05_VERIFICATION_AND_RISK.md)                             | Verification gates, risk-based approval, human review handoff |
-| [06 Build, Repair & Stop](docs/agvi/en/06_BUILD_REPAIR_AND_STOP_CONDITIONS.md)                 | Build-and-repair loop, stop conditions, failure mode report   |
-| [07 Engineering Judgment](docs/agvi/en/07_ENGINEERING_THINKING_AND_JUDGMENT.md)                | Critical thinking, judgment dimensions, AI skepticism         |
-| [08 Learning & Skills](docs/agvi/en/08_LEARNING_REFLECTION_AND_SKILL_DEVELOPMENT.md)           | Reflection reports, skill progression, mentor mode            |
-| [09 Adapters & Framework Files](docs/agvi/en/09_AGENT_ADAPTERS_AND_FRAMEWORK_FILES.md)         | Agent compatibility, trust kernel, project rule layers        |
-| [10 Productization & Platform](docs/agvi/en/10_PRODUCTIZATION_AND_PLATFORM.md)                 | CLI, Git/PR, web dashboard, roadmap                           |
-| [11 Research](docs/agvi/en/11_RESEARCH_POSITIONING.md)                                         | Research contributions, questions, evaluation metrics         |
-| [12 Chief Comparison](docs/agvi/en/12_CHIEF_COMPARISON.md)                                     | Relationship to Chief, compatibility mode sequence diagram    |
-| [13 Examples & Scenarios](docs/agvi/en/13_EXAMPLES_AND_SCENARIOS.md)                           | Walkthrough scenarios and expected outputs                    |
-| [Glossary](docs/agvi/en/14_GLOSSARY.md)                                                        | Definitions and cross-links                                   |
-| [15 Concrete Examples](docs/agvi/en/15_CONCRETE_EXAMPLES.md)                                   | Trust Kernel v0.1 (18 rules), AGENTS.md, CLAUDE.md reference files           |
-
----
-
-## CLI Quick Start
+## How to use the template
 
 ```bash
-vgai init        # Install trust kernel, role contracts, workflow templates, and scripts
-vgai discover    # Build product/project profile and codebase map
-vgai plan        # Generate acceptance criteria, assumption log, and implementation plan
-vgai run         # Execute task workflow through an existing coding agent
-vgai verify      # Run verification gates and summarize evidence
-vgai report      # Generate trust/risk, reflection, and handoff artifacts
+git clone <this-repo> my-project
+cd my-project/template
+# read CLAUDE.md, then in your Claude Code session:
+#   /start-task <what you want to build>
 ```
 
-> Agent slash-command alias: `/vgai-init` is supported as an optional alias for
-> use inside agent command UIs.
+What the template enforces:
+
+- Acceptance Criteria stated **before** any `Edit`/`Write` (blocked by hook)
+- Risk classification (Low/Medium/High) before implementation
+- Reuse check (grep) before creating new code
+- Risk enumeration for new API endpoints
+- Decision log entry for every Medium/High decision
+- Reflection report at task end (with 4-question risk coverage check)
+
+See [`template/README.md`](template/README.md) for the full file layout and
+explanation.
+
+## Repo layout
+
+| Path | What it is |
+| --- | --- |
+| `template/` | Drop-in P0 Discipline Layer for new projects |
+| `docs/agvi/th/00_WHAT_IS_VGAI.md` | Vision + pitch + decisions (Thai, source of truth) |
+| `README.md` / `README_TH.md` | This file |
+
+## What VG-AI is **not**
+
+- Not a new AI coding agent
+- Not a runtime or orchestrator
+- Not a web platform or dashboard
+- Not a CLI (no `vgai init` command — clone the template manually for now)
+- Not a research project (use-it-yourself first; thesis deferred)
+
+For the older, broader vision (multi-role governance, Trust Kernel v0.1,
+dashboard, etc.) see `main` branch at commit `d425b77` or earlier.

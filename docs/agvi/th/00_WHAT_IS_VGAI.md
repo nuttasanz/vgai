@@ -4,11 +4,9 @@ status: current understanding as of 2026-05-18 — supersedes earlier framing
 implementation_status: P0 (Discipline Layer) — done — see `template/`
 ---
 
-**การนำทาง:** ดู [ภาพรวม](PRODUCT_VISION.md)
-
 # VG-AI คืออะไร
 
-เอกสารนี้คือ *แหล่งความจริงล่าสุด* ของ VG-AI สรุปจากการคุยกันวันที่ 2026-05-18 หากเอกสารอื่นใน vision ขัดกับเอกสารนี้ ให้ยึดเอกสารนี้เป็นหลัก จนกว่าเอกสารอื่นจะถูก refactor
+เอกสารนี้คือ **source of truth ของ VG-AI** สรุปจากการคุยกันวันที่ 2026-05-18 และ pivot scope ครั้งใหญ่ (เอกสาร 01-14 ของ vision เดิมถูกลบทิ้งใน branch `pivot/p0-discipline`)
 
 ---
 
@@ -199,20 +197,17 @@ template main ตอนนี้ใช้ Next.js stack (เลือกตา�
 
 ---
 
-## ความสัมพันธ์กับเอกสารอื่น
+## เอกสารและไฟล์ที่เกี่ยวข้อง
 
-| ถ้าคุณต้องการ... | ดู doc |
+| ถ้าคุณต้องการ... | ดู |
 | --- | --- |
-| Pitch + ทิศทาง (เอกสารนี้) | 00 |
-| หลักการออกแบบ | 01 Principles |
-| Workflow + tier (กำลังจะ simplify) | 02 |
-| Multi-role governance (อาจตัดทอน) | 03 |
-| Tech stack + rule generation | 04 |
-| Verification gates (ยังใช้ได้เป็นแนวคิด) | 05 |
-| Build & repair (ยังใช้ได้เป็นแนวคิด) | 06 |
-| Engineering judgment | 07 |
-| Reflection structure (ยังใช้ได้เป็นแนวคิด) | 08 |
-| Hook + framework files (ยังใช้ได้) | 09 |
-| Productization (อาจ defer ทั้งก้อน) | 10 |
+| Pitch + scope + insight (เอกสารนี้) | `docs/agvi/th/00_WHAT_IS_VGAI.md` |
+| ใช้ template จริง | `template/README.md` |
+| กฎ R1-R16 ที่ AI ต้องทำตาม | `template/CLAUDE.md` |
+| Subset สำหรับ Codex/Cursor | `template/AGENTS.md` |
+| Engineering decisions + rationale | `template/DECISION_LOG.md` |
+| Assumptions ที่ค้างอยู่ | `template/OPEN_QUESTIONS.md` |
+| Hook script ที่ block Edit/Write | `template/.claude/hooks/check-acceptance-criteria.sh` |
+| Slash commands | `template/.claude/commands/{start-task,reflect,log-decision}.md` |
 
-doc 11-15 จะ revise หรือตัดในรอบหน้า
+> Vision เก่า (runtime, multi-role, TK 18 rules, dashboard) ถูกตัดออกใน pivot นี้ ดูได้จาก git history บน branch `main` (commit `d425b77` ก่อน pivot)
