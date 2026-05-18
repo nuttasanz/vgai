@@ -17,6 +17,7 @@ VG-AI **ไม่ใช่** AI ใหม่ ไม่ใช่ runtime ให�
 
 > Source of truth ของ vision อยู่ที่
 > [`docs/agvi/th/00_WHAT_IS_VGAI.md`](docs/agvi/th/00_WHAT_IS_VGAI.md)
+> (ฉบับ EN: [`docs/agvi/en/00_WHAT_IS_VGAI.md`](docs/agvi/en/00_WHAT_IS_VGAI.md))
 > อ่านเอกสารนั้นก่อนสำหรับ context เต็ม
 
 ## สถานะ
@@ -58,7 +59,8 @@ cd my-project/template
 | Path | คืออะไร |
 | --- | --- |
 | `template/` | P0 Discipline Layer พร้อม drop เข้า project ใหม่ |
-| `docs/agvi/th/00_WHAT_IS_VGAI.md` | Vision + pitch + decisions (source of truth) |
+| `docs/agvi/th/00_WHAT_IS_VGAI.md` | Vision + pitch + decisions (ภาษาไทย — source of truth) |
+| `docs/agvi/en/00_WHAT_IS_VGAI.md` | ฉบับภาษาอังกฤษ |
 | `README.md` / `README_TH.md` | ไฟล์นี้ |
 
 ## VG-AI **ไม่ใช่**

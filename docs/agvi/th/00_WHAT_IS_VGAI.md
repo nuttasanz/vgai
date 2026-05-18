@@ -202,6 +202,7 @@ template main ตอนนี้ใช้ Next.js stack (เลือกตา�
 | ถ้าคุณต้องการ... | ดู |
 | --- | --- |
 | Pitch + scope + insight (เอกสารนี้) | `docs/agvi/th/00_WHAT_IS_VGAI.md` |
+| ฉบับภาษาอังกฤษของเอกสารนี้ | `docs/agvi/en/00_WHAT_IS_VGAI.md` |
 | ใช้ template จริง | `template/README.md` |
 | กฎ R1-R16 ที่ AI ต้องทำตาม | `template/CLAUDE.md` |
 | Subset สำหรับ Codex/Cursor | `template/AGENTS.md` |

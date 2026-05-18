@@ -17,11 +17,11 @@ Code, Codex, Cursor) and force them to:
 The result: every task ships working code **and** teaches the user how a senior
 engineer would think about it.
 
-> The full vision doc is currently Thai-only.
-> See [`docs/agvi/th/00_WHAT_IS_VGAI.md`](docs/agvi/th/00_WHAT_IS_VGAI.md) for
-> the source of truth.
-> English version of this README is a thin pointer for now —
-> see also [README_TH.md](README_TH.md).
+> Full vision doc:
+> [`docs/agvi/en/00_WHAT_IS_VGAI.md`](docs/agvi/en/00_WHAT_IS_VGAI.md)
+> (Thai original at
+> [`docs/agvi/th/00_WHAT_IS_VGAI.md`](docs/agvi/th/00_WHAT_IS_VGAI.md) — treat
+> as authoritative if the two drift). See also [README_TH.md](README_TH.md).
 
 ## Status
 
@@ -63,7 +63,8 @@ explanation.
 | Path | What it is |
 | --- | --- |
 | `template/` | Drop-in P0 Discipline Layer for new projects |
-| `docs/agvi/th/00_WHAT_IS_VGAI.md` | Vision + pitch + decisions (Thai, source of truth) |
+| `docs/agvi/en/00_WHAT_IS_VGAI.md` | Vision + pitch + decisions (English) |
+| `docs/agvi/th/00_WHAT_IS_VGAI.md` | Same, Thai (authoritative original) |
 | `README.md` / `README_TH.md` | This file |
 
 ## What VG-AI is **not**
